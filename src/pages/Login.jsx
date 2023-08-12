@@ -71,8 +71,8 @@ const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center my-10">
-      <div className="card lg:w-[35%] md:w-[60%] w-[90%] bg-base-100 shadow-xl">
+    <div className="flex justify-center items-center py-10 bg-green-100">
+      <div className="card lg:w-[35%] md:w-[60%] w-[90%] shadow-xl bg-green-200">
         <div className="card-body items-center ">
           <h2 className="card-title text-2xl">Login</h2>
 
@@ -84,7 +84,7 @@ const Login = () => {
               <input
                 type="email"
                 placeholder="Email Address"
-                className="input input-bordered w-full"
+                className="input input-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 w-full"
                 {...register("email", {
                   required: {
                     value: true,
@@ -116,7 +116,7 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="Password"
-                className="input input-bordered w-full"
+                className="input input-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 w-full"
                 {...register("password", {
                   required: {
                     value: true,
@@ -152,20 +152,20 @@ const Login = () => {
             {signInError}
             <input
               type="submit"
-              className="btn btn-primary w-full mt-4 text-white"
+              className="btn w-full mt-4 bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
               value="Login"
             />
           </form>
-          <p className="text-sm pt-2">
-            New to React Challenge?{" "}
-            <Link className="text-sky-500" to="/signup">
+          <p className="text-sm pt-2 font-semibold ">
+            New to React Challenge?
+            <Link className="text-sky-500 underline ml-2" to="/signup">
               Create new account
             </Link>
           </p>
 
           <div className="divider">OR</div>
           <button
-            className="btn btn-outline w-full"
+            className="btn btn-outline w-full hover:bg-gradient-to-r hover:from-emerald-400 hover:to-green-400 hover:border-none"
             onClick={() => signInWithGoogle()}
           >
             <div className="flex justify-center items-center gap-3">

@@ -1,5 +1,9 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import AOS from "aos";
+import "aos/dist/aos.css"; // You can also use <link> for styles
+// ..
+AOS.init();
 
 const MainLayout = () => {
   return (
