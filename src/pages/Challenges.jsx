@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { client } from "../api/api-client";
 import { getAllChallenges } from "../api/api";
 import { defer, useLoaderData, Await, useNavigate } from "react-router-dom";
-import useToken from "../hooks/useToken";
 
 export const loadChallenges = async ({ params }) => {
   const challenges = await getAllChallenges();
@@ -93,7 +92,7 @@ root.render(
   "/package.json": {
     code: JSON.stringify({
       scripts: {
-        start: "react-scripts start"
+        start: "react-scripts start",
       },
       dependencies: {
         react: "^18.0.0",
@@ -101,73 +100,79 @@ root.render(
         "react-scripts": "^5.0.0",
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^14.0.0",
-        "jsdom": "^22.1.0",
-        "vitest": "^0.33.0",
+        jsdom: "^22.1.0",
+        vitest: "^0.33.0",
       },
       main: "/index.js",
     }),
   },
-
 };
 
 const Challenges = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { challenges } = useLoaderData();
-  const [token, setToken] = useState(() => window.localStorage.getItem('accessToken'))
+  const [token, setToken] = useState(() =>
+    window.localStorage.getItem("accessToken"),
+  );
 
-  async function handleNewChallenge(){
+  async function handleNewChallenge() {
     const challengeFiles = {
-      title: "default challenge 1",
+      title: "test challenge",
       challengeCategory: "UI",
-      description: "create a button with Click text", 
+      description: "create a button with Click text",
       difficultyLevel: "Easy",
-      files: JSON.stringify(filesWithTests)
-    }
-    console.log('token : ', token)
-    await client('challenges', {data: challengeFiles, token})
+      files: JSON.stringify(filesWithTests),
+    };
+    console.log("token : ", token);
+    await client("challenges", { data: challengeFiles, token });
   }
 
   return (
     <>
-    <div>List of Challenges</div>
+      <div>List of Challenges</div>
 
-    <div>
-     <div>Create Challenge</div>
-     <div>
-       <button className="btn" onClick={handleNewChallenge}>Add New Challenge</button>
-     </div>
-    </div>
+      <div>
+        <div>Create Challenge</div>
+        <div>
+          <button className="btn" onClick={handleNewChallenge}>
+            Add New Challenge
+          </button>
+        </div>
+      </div>
 
-    <div className="overflow-x-auto">
-       <table className="table table-zebra">
-         {/* head */}
-         <thead>
-           <tr>
-             <th>Name</th>
-             <th>Category</th>
-             <th>Difficulty level</th>
-           </tr>
-         </thead>
-         <tbody>
-           {/* row 1 */}
-           <tr>
-             <td>Cy Ganderton</td>
-             <td>Quality Control Specialist</td>
-             <td>Blue</td>
-           </tr>
-           {
-             challenges?.success && challenges?.data.map(challenge => (
-             <tr key={challenge._id} onClick={() => navigate(`/challenges/${challenge._id}`)} className="cursor-pointer" >
-               <td>{challenge.title}</td>
-               <td>{challenge.challenge_categories}</td>
-               <td>{"Easy"}</td>
-             </tr>
-             ))
-           }
-         </tbody>
-       </table>
-     </div>
-     </>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Difficulty level</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            <tr>
+              <td>Cy Ganderton</td>
+              <td>Quality Control Specialist</td>
+              <td>Blue</td>
+            </tr>
+            {challenges?.success &&
+              challenges?.data.map((challenge) => (
+                <tr
+                  key={challenge._id}
+                  onClick={() => navigate(`/challenges/${challenge._id}`)}
+                  className="cursor-pointer"
+                >
+                  <td>{challenge.title}</td>
+                  <td>{challenge.challengeCategory}</td>
+                  <td>{challenge.difficultyLevel}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
