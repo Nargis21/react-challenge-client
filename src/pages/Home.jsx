@@ -1,4 +1,3 @@
-import React from "react";
 import Lottie from "react-lottie";
 import banner from "../assets/home.json";
 import react from "../assets/react.json";

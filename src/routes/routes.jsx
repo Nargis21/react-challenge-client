@@ -5,7 +5,7 @@ import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
 import Challenges, { loadChallenges } from "../pages/Challenges";
-import MyChallenges from "../pages/MyChallenges";
+import MyChallenges, {loadUserChallenges} from "../pages/MyChallenges";
 import RequireAuth from "../utils/RequireAuth";
 import ManageChallenges from "../pages/ManageChallenges";
 import RequireAdmin from "../utils/RequireAdmin";
@@ -50,6 +50,7 @@ const routes = createBrowserRouter([
             <MyChallenges />
           </RequireAuth>
         ),
+        loader: loadUserChallenges
       },
       {
         path: "/manage-challenges",
