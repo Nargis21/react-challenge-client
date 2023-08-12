@@ -10,6 +10,7 @@ import RequireAuth from "../utils/RequireAuth";
 import ManageChallenges from "../pages/ManageChallenges";
 import RequireAdmin from "../utils/RequireAdmin";
 import Challenge, {loadChallenge} from "../pages/Challenge";
+import CreateChallenge from "../pages/CreateChallenge";
 
 const routes = createBrowserRouter([
   {
@@ -54,13 +55,29 @@ const routes = createBrowserRouter([
       },
       {
         path: "/manage-challenges",
-        element: (
-          <RequireAuth>
-            <RequireAdmin>
-              <ManageChallenges />
-            </RequireAdmin>
-          </RequireAuth>
-        ),
+        children: [
+          {
+            index: true,
+            element: (
+              <RequireAuth>
+                <RequireAdmin>
+                  <ManageChallenges />
+                </RequireAdmin>
+              </RequireAuth>
+            ),
+            loader: loadChallenges
+          },
+          {
+            path: "create",
+            element: (
+              <RequireAuth>
+                <RequireAdmin>
+                  <CreateChallenge />
+                </RequireAdmin>
+              </RequireAuth>
+            ),
+          }
+        ]
       },
     ],
   },

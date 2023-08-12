@@ -117,7 +117,7 @@ const Challenges = () => {
 
   async function handleNewChallenge() {
     const challengeFiles = {
-      title: "test challenge",
+      title: "test challenge 2",
       challengeCategory: "UI",
       description: "create a button with Click text",
       difficultyLevel: "Easy",

@@ -122,7 +122,7 @@ function MonacoEditor({setFiles}){
 const Challenge = () => {
   const { challenge } = useLoaderData();
   const [token, setToken] = useState(() => window.localStorage.getItem('accessToken'))
-  console.log('challenges : ', challenge)
+  console.log('challenge data : ', challenge)
   const [files, setFiles] = useState(() => (JSON.parse(challenge.data.files)))
   console.log('files : ', files)
   const [showConsole, setShowConsole] = useState(true)
@@ -152,7 +152,8 @@ const Challenge = () => {
       difficultyLevel: challenge.data.difficultyLevel,
       files: JSON.stringify(files)
     }
-    await client('user/challenge', {data: updatedChallengeData, token})
+    console.log('updated challenge : ', updatedChallengeData)
+    // await client('user/challenge', {data: updatedChallengeData, token})
   }
 
   if(!challenge.success){
