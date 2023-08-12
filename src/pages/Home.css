@@ -1,0 +1,3 @@
+.chat-bubble::before{
+    @apply bg-gradient-to-r from-emerald-300 to-green-300
+}
