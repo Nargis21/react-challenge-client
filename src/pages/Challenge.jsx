@@ -145,15 +145,15 @@ const Challenge = () => {
 
   async function handleSaveChallenge(){
     const updatedChallengeData = {
-      challengeId: challenge.data._id,
+      challengeId: challenge.data.challengeId ?? challenge.data._id,
       title: challenge.data.title,
       description: challenge.data.description,
       challengeCategory: challenge.data.challengeCategory,
       difficultyLevel: challenge.data.difficultyLevel,
       files: JSON.stringify(files)
     }
-    console.log('updated challenge : ', updatedChallengeData)
-    // await client('user/challenge', {data: updatedChallengeData, token})
+
+    await client('user/challenge', {data: updatedChallengeData, token})
   }
 
   if(!challenge.success){
