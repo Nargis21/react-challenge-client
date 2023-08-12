@@ -4,11 +4,12 @@ import NotFound from "../pages/NotFound";
 import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
-import Challenges from "../pages/Challenges";
+import Challenges, { loadChallenges } from "../pages/Challenges";
 import MyChallenges from "../pages/MyChallenges";
 import RequireAuth from "../utils/RequireAuth";
 import ManageChallenges from "../pages/ManageChallenges";
 import RequireAdmin from "../utils/RequireAdmin";
+import Challenge, {loadChallenge} from "../pages/Challenge";
 
 const routes = createBrowserRouter([
   {
@@ -29,7 +30,18 @@ const routes = createBrowserRouter([
       },
       {
         path: "/challenges",
-        element: <Challenges />,
+        children: [
+          {
+            index: true,
+            element: <Challenges />,
+            loader: loadChallenges
+          },
+          {
+            path: ":id",
+            element: <Challenge />,
+            loader: loadChallenge
+          }
+        ]
       },
       {
         path: "/my-challenges",
