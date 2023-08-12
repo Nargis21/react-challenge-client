@@ -4,6 +4,7 @@ import { getChallengeById } from "../api/api";
 import * as React from 'react'
 import Split from 'react-split'
 import './Challenge.css'
+import { client } from "../api/api-client";
 
 import { SandpackProvider, 
   SandpackLayout, 
@@ -23,6 +24,7 @@ import { Editor } from "@monaco-editor/react";
 import Tabs, {TabContent} from "../components/Tabs";
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { getFileLanguage } from "../utils/fileHelper";
 
 export const loadChallenge = async ({ params }) => {
   const challengeId = params.id
@@ -85,9 +87,20 @@ Here is an example of a plugin to highlight code:
 [rehype-highlight](https://github.com/rehypejs/rehype-highlight).
 `
 
-function MonacoEditor(){
+function MonacoEditor({setFiles}){
   const { code, updateCode } = useActiveCode();
   const { sandpack } = useSandpack();
+  const activeFile = sandpack.activeFile
+
+  console.log('active file : ', sandpack.activeFile)
+
+  function handleUpdateCode(value){
+     updateCode(value || "")
+     setFiles(currentFiles => ({
+      ...currentFiles,
+      [`${activeFile}`]: {code : value }
+     }))
+  }
   
   return (
     <SandpackStack style={{ height: "100%", margin: 0 }}>
@@ -95,11 +108,11 @@ function MonacoEditor(){
       {/* <div style={{ flex: 1, paddingTop: 8, background: "#1e1e1e" }}> */}
         <Editor
           height="100%"
-          language="javascript"
+          language={getFileLanguage(activeFile)}
           theme="vs-dark"
-          key={sandpack.activeFile}
+          key={activeFile}
           defaultValue={code}
-          onChange={(value) => updateCode(value || "")}
+          onChange={(value) => handleUpdateCode(value)}
         />
       {/* </div> */}
     </SandpackStack>
@@ -108,6 +121,7 @@ function MonacoEditor(){
 
 const Challenge = () => {
   const { challenge } = useLoaderData();
+  const [token, setToken] = useState(() => window.localStorage.getItem('accessToken'))
   console.log('challenges : ', challenge)
   const [files, setFiles] = useState(() => (JSON.parse(challenge.data.files)))
   console.log('files : ', files)
@@ -129,6 +143,18 @@ const Challenge = () => {
   ]);
   const [activeTab, setActiveTab] = useState(allTabs[0]);
 
+  async function handleSaveChallenge(){
+    const updatedChallengeData = {
+      challengeId: challenge.data._id,
+      title: challenge.data.title,
+      description: challenge.data.description,
+      challengeCategory: challenge.data.challengeCategory,
+      difficultyLevel: challenge.data.difficultyLevel,
+      files: JSON.stringify(files)
+    }
+    await client('user/challenge', {data: updatedChallengeData, token})
+  }
+
   if(!challenge.success){
     return <div>Error while fetching challenge data</div>
   }
@@ -138,7 +164,7 @@ const Challenge = () => {
     theme="dark" 
     files={files}
     options={{ 
-      visibleFiles: ["package.json"],
+      visibleFiles: ["package.json", "/public/index.html"],
       activeFile: "/App.js",
       readOnly: true
     }}
@@ -203,10 +229,13 @@ const Challenge = () => {
         <div>
           <div className="section_header console_header">
             <div>javascript</div>
-            <div>Reset</div>
+            <div>
+             <button className="btn btn-success btn-xs"  onClick={handleSaveChallenge}>Save</button>
+            </div>
+            
           </div>
           <div className="editor_container">
-           <MonacoEditor />
+           <MonacoEditor setFiles={setFiles} />
           {/* <Editor 
             height="100%"
             theme="vs-dark"
