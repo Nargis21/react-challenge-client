@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { client } from "../api/api-client";
 import { getAllChallenges } from "../api/api";
 import { defer, useLoaderData, Await, useNavigate } from "react-router-dom";
+import useToken from "../hooks/useToken";
+import ChallengeCard from "../components/ChallengeCard";
 
 export const loadChallenges = async ({ params }) => {
   const challenges = await getAllChallenges();
@@ -112,67 +114,140 @@ const Challenges = () => {
   const navigate = useNavigate();
   const { challenges } = useLoaderData();
   const [token, setToken] = useState(() =>
-    window.localStorage.getItem("accessToken"),
+    window.localStorage.getItem("accessToken")
   );
 
-  async function handleNewChallenge() {
-    const challengeFiles = {
-      title: "test challenge",
-      challengeCategory: "UI",
-      description: "create a button with Click text",
-      difficultyLevel: "Easy",
-      files: JSON.stringify(filesWithTests),
-    };
-    console.log("token : ", token);
-    await client("challenges", { data: challengeFiles, token });
-  }
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("");
+
+  // async function handleNewChallenge() {
+  //   const challengeFiles = {
+  //     title: "default challenge 1",
+  //     challengeCategory: "UI",
+  //     description: "create a button with Click text",
+  //     difficultyLevel: "Easy",
+  //     files: JSON.stringify(filesWithTests),
+  //   };
+  //   console.log("token : ", token);
+  //   await client("challenges", { data: challengeFiles, token });
+  // }
+
+  // Search challenges by title or author
+  const searchedChallenges = challenges?.data.filter((challenge) => {
+    const titleMatch = challenge.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const categoryMatch = challenge.challengeCategory
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const difficultyMatch = challenge.difficultyLevel
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return titleMatch || categoryMatch || difficultyMatch;
+  });
+
+  // Extract unique categories from the challenge data
+  const categories = [
+    ...new Set(
+      challenges?.data.map((challenge) => challenge.challengeCategory)
+    ),
+  ];
+
+  // Extract unique difficulties from the challenge data
+  const difficulties = [
+    ...new Set(challenges?.data.map((challenge) => challenge.difficultyLevel)),
+  ];
+
+  // Filter challenges by category
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  // Filter challenges by publication difficulty
+  const handleDifficultyChange = (e) => {
+    setSelectedDifficulty(e.target.value);
+  };
+
+  const filteredChallengesByCategoryAndDifficulty = searchedChallenges?.filter(
+    (challenge) => {
+      const categoryMatch =
+        !selectedCategory ||
+        challenge.challengeCategory.toLowerCase() ===
+          selectedCategory.toLowerCase();
+      const difficultyMatch =
+        !selectedDifficulty ||
+        challenge.difficultyLevel.toLowerCase() ===
+          selectedDifficulty.toLowerCase();
+      return categoryMatch && difficultyMatch;
+    }
+  );
+
+  // Reset filters
+  const resetFilters = () => {
+    setSearchTerm("");
+    setSelectedCategory("");
+    setSelectedDifficulty("");
+  };
 
   return (
-    <>
-      <div>List of Challenges</div>
+    <div>
+      <div className="grid lg:grid-cols-10 grid-cols-1 gap-4 lg:p-12 p-4 bg-green-200">
+        <div className="col-span-6">
+          <input
+            type="text"
+            placeholder="Search by Title or Category"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 w-full"
+          />
+        </div>
 
-      <div>
-        <div>Create Challenge</div>
-        <div>
-          <button className="btn" onClick={handleNewChallenge}>
-            Add New Challenge
+        <div className="flex lg:gap-4 gap-2 col-span-4">
+          <select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 "
+          >
+            <option value="">Category</option>
+            {categories.map((category, i) => (
+              <option key={i} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={selectedDifficulty}
+            onChange={handleDifficultyChange}
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          >
+            <option value="">Difficulty</option>
+            {difficulties.map((difficulty, i) => (
+              <option key={i} value={difficulty}>
+                {difficulty}
+              </option>
+            ))}
+          </select>
+
+          <button
+            onClick={resetFilters}
+            className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
+          >
+            Reset Filters
           </button>
         </div>
       </div>
-
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Difficulty level</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            <tr>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
-            {challenges?.success &&
-              challenges?.data.map((challenge) => (
-                <tr
-                  key={challenge._id}
-                  onClick={() => navigate(`/challenges/${challenge._id}`)}
-                  className="cursor-pointer"
-                >
-                  <td>{challenge.title}</td>
-                  <td>{challenge.challengeCategory}</td>
-                  <td>{challenge.difficultyLevel}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+      <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 bg-green-100">
+        {challenges?.success &&
+          filteredChallengesByCategoryAndDifficulty?.map((challenge) => (
+            <ChallengeCard
+              key={challenge._id}
+              challenge={challenge}
+            ></ChallengeCard>
+          ))}
       </div>
-    </>
+    </div>
   );
 };
 

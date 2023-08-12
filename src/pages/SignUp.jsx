@@ -58,8 +58,8 @@ const SignUp = () => {
     return <Loading></Loading>;
   }
   return (
-    <div className="flex justify-center items-center my-10">
-      <div className="card lg:w-[35%] md:w-[60%] w-[90%] bg-base-100 shadow-xl">
+    <div className="flex justify-center items-center py-10 bg-green-100">
+      <div className="card lg:w-[35%] md:w-[60%] w-[90%] shadow-xl bg-green-200">
         <div className="card-body items-center ">
           <h2 className="card-title text-2xl">Sign Up</h2>
 
@@ -71,7 +71,7 @@ const SignUp = () => {
               <input
                 type="text"
                 placeholder="Your Name"
-                className="input input-bordered w-full"
+                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-emerald-400 "
                 {...register("name", {
                   required: {
                     value: true,
@@ -94,7 +94,7 @@ const SignUp = () => {
               <input
                 type="email"
                 placeholder="Email Address"
-                className="input input-bordered w-full"
+                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-emerald-400 "
                 {...register("email", {
                   required: {
                     value: true,
@@ -126,7 +126,7 @@ const SignUp = () => {
               <input
                 type="password"
                 placeholder="Password"
-                className="input input-bordered w-full"
+                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-emerald-400 "
                 {...register("password", {
                   required: {
                     value: true,
@@ -154,20 +154,23 @@ const SignUp = () => {
             {signInError}
             <input
               type="submit"
-              className="btn btn-primary w-full mt-4 text-white"
+              className="btn w-full mt-4 bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
               value="Sign Up"
             />
           </form>
           <p className="text-sm pt-2">
-            Already have an Account?{" "}
-            <Link className="text-sky-500" to="/login">
+            Already have an Account?
+            <Link
+              className="text-sky-500 font-semibold underline ml-2"
+              to="/login"
+            >
               Please Login
             </Link>
           </p>
 
           <div className="divider">OR</div>
           <button
-            className="btn btn-outline w-full"
+            className="btn btn-outline w-full hover:bg-gradient-to-r hover:from-emerald-400 hover:to-green-400 hover:border-none"
             onClick={() => signInWithGoogle()}
           >
             <div className="flex justify-center items-center gap-3">
