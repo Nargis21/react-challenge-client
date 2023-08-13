@@ -4,7 +4,7 @@ export function Bar({ tab, activeTab, setActiveTab }) {
   const tabStyle =
     tab.tabName === activeTab.tabName
       ? "tab tab-lifted tab-active"
-      : "tab tab-lifted";
+      : "tab tab-lifted text-slate-400";
   return (
     <div onClick={() => setActiveTab(tab)} className={tabStyle}>
       {tab.tabName}

@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { defer, useLoaderData, Await } from "react-router-dom";
+import { defer, useLoaderData, Await, useNavigate } from "react-router-dom";
 import { getChallengeById } from "../api/api";
 import * as React from "react";
 import Split from "react-split";
@@ -124,6 +124,7 @@ const Challenge = () => {
   const [token, setToken] = useState(() =>
     window.localStorage.getItem("accessToken")
   );
+  const navigate = useNavigate();
   const [files, setFiles] = useState(() => JSON.parse(challenge.data.files));
   const [showConsole, setShowConsole] = useState(true);
   const [showConsoleOnRight, setShowConsoleOnRight] = useState(true);
@@ -148,6 +149,11 @@ const Challenge = () => {
   const [activeTab, setActiveTab] = useState(allTabs[0]);
 
   async function handleSaveChallenge() {
+    if (!token) {
+      navigate("/login");
+      toast.error("Please Login");
+      return;
+    }
     setEnableSaveButton(false);
     const updatedChallengeData = {
       challengeId: challenge.data.challengeId ?? challenge.data._id,
@@ -186,7 +192,6 @@ const Challenge = () => {
       >
         <SandpackLayout>
           <div className="main_container">
-            <div className="header_section">Header</div>
             <div className="main_section">
               <Split
                 className="container"
