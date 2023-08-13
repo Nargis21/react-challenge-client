@@ -93,8 +93,6 @@ function MonacoEditor({ setFiles }) {
   const { sandpack } = useSandpack();
   const activeFile = sandpack.activeFile;
 
-  console.log("active file : ", sandpack.activeFile);
-
   function handleUpdateCode(value) {
     updateCode(value || "");
     setFiles((currentFiles) => ({
@@ -126,9 +124,7 @@ const Challenge = () => {
   const [token, setToken] = useState(() =>
     window.localStorage.getItem("accessToken")
   );
-  console.log("challenge data : ", challenge);
   const [files, setFiles] = useState(() => JSON.parse(challenge.data.files));
-  console.log("files : ", files);
   const [showConsole, setShowConsole] = useState(true);
   const [showConsoleOnRight, setShowConsoleOnRight] = useState(true);
   const [allTabs, setAllTabs] = useState([

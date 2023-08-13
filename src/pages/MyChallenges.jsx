@@ -13,9 +13,7 @@ const MyChallenges = () => {
   let revalidator = useRevalidator();
 
   async function handleRemoveChallenge(challengeId) {
-    console.log(challengeId);
     const result = await removeUserChallengeById(challengeId);
-    console.log("res : ", result);
     if (result.success) {
       toast.success("Successfully Removed.");
     } else {

@@ -1,10 +1,10 @@
-import * as React from 'react'
+import * as React from "react";
 
 export function Bar({ tab, activeTab, setActiveTab }) {
   const tabStyle =
     tab.tabName === activeTab.tabName
-      ? 'tab tab-lifted tab-active'
-      : 'tab tab-lifted';
+      ? "tab tab-lifted tab-active"
+      : "tab tab-lifted";
   return (
     <div onClick={() => setActiveTab(tab)} className={tabStyle}>
       {tab.tabName}
@@ -17,7 +17,6 @@ export function TabContent({ activeTab }) {
 }
 
 export default function Tabs({ allTabs, activeTab, setActiveTab }) {
-  // console.log('tabs : ',tabs)
   return (
     <div className="tabs">
       {allTabs.map((tab) => (

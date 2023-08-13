@@ -1,4 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom";
 
 const MyChallengeCard = ({ challenge, deleteHandler }) => {
   const { challengeId, title, difficultyLevel, challengeCategory } = challenge;
