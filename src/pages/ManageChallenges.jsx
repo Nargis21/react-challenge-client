@@ -8,6 +8,9 @@ import {
 } from "react-router-dom";
 import { deleteChallengeById } from "../api/api";
 import { toast } from "react-toastify";
+import { BiSolidEdit, BiSolidTrash } from "react-icons/bi";
+import { IoMdCreate } from "react-icons/io";
+import { GrPowerReset } from "react-icons/gr";
 
 export const loadChallenges = async () => {
   const challenges = await getAllChallenges();
@@ -138,7 +141,7 @@ const ManageChallenges = () => {
             onClick={resetFilters}
             className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
           >
-            Reset Filters
+            Reset Filters <GrPowerReset className="text-xl"></GrPowerReset>
           </button>
         </div>
       </div>
@@ -151,7 +154,7 @@ const ManageChallenges = () => {
             className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
             onClick={() => navigate("/manage-challenges/create")}
           >
-            Create new Challenge
+            Create new Challenge <IoMdCreate className="text-xl"></IoMdCreate>
           </button>
         </div>
         <div className="overflow-x-auto flex items-center justify-center pb-6">
@@ -180,13 +183,14 @@ const ManageChallenges = () => {
                           onClick={() => handleEditChallenge(challenge._id)}
                           className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none btn-sm"
                         >
-                          Edit
+                          Edit <BiSolidEdit className="text-xl"></BiSolidEdit>
                         </button>
                         <button
                           onClick={() => handleDeleteChallenge(challenge._id)}
                           className="btn btn-error btn-sm"
                         >
-                          Delete
+                          Delete{" "}
+                          <BiSolidTrash className="text-xl"></BiSolidTrash>
                         </button>
                       </td>
                     </tr>

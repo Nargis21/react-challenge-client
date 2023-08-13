@@ -5,6 +5,8 @@ import { signOut } from "firebase/auth";
 import useAdmin from "../hooks/useAdmin";
 import react from "../assets/react.json";
 import Lottie from "react-lottie";
+import { FaReact } from "react-icons/fa";
+import { PiSignInBold, PiSignOutBold } from "react-icons/pi";
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
@@ -39,11 +41,19 @@ const Navbar = () => {
 
       <li>
         {user ? (
-          <button onClick={handleLogout} className="">
-            Logout
+          <button
+            onClick={handleLogout}
+            className="border border-white rounded px-4 py-2 hover:bg-white"
+          >
+            Logout <PiSignOutBold></PiSignOutBold>
           </button>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link
+            to="/login"
+            className="border border-white rounded px-4 py-2 hover:bg-white"
+          >
+            Login <PiSignInBold></PiSignInBold>
+          </Link>
         )}
       </li>
     </>
@@ -88,8 +98,9 @@ const Navbar = () => {
         <Link to="/" className=" hidden lg:flex">
           <div className="flex items-center">
             {/* <img src={logo} alt="Logo" className="w-[50px] mr-2" /> */}
-            <Lottie options={defaultOptions} height={60} width={60} />
-            <h1 className="normal-case text-2xl font-thin">
+            {/* <Lottie options={defaultOptions} height={60} width={60} /> */}
+            <h1 className="normal-case text-2xl font-thin text-slate-700 flex items-center gap-2">
+              <FaReact className="text-3xl"></FaReact>
               <span className="font-bold">React</span> Challenge
             </h1>
           </div>
