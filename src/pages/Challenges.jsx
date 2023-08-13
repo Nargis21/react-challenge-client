@@ -238,14 +238,16 @@ const Challenges = () => {
           </button>
         </div>
       </div>
-      <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 bg-green-100">
-        {challenges?.success &&
-          filteredChallengesByCategoryAndDifficulty?.map((challenge) => (
-            <ChallengeCard
-              key={challenge._id}
-              challenge={challenge}
-            ></ChallengeCard>
-          ))}
+      <div className="h-screen bg-green-100">
+        <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 ">
+          {challenges?.success &&
+            filteredChallengesByCategoryAndDifficulty?.map((challenge) => (
+              <ChallengeCard
+                key={challenge._id}
+                challenge={challenge}
+              ></ChallengeCard>
+            ))}
+        </div>
       </div>
     </div>
   );
