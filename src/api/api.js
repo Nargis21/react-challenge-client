@@ -59,3 +59,16 @@ export async function getUserChallengeById(challengeId){
   })
   return await response.json()
 }
+
+// manage challenge
+export async function deleteChallengeById(challengeId){
+  const response = await fetch(`${import.meta.env.VITE_backend_api}/challenges/${challengeId}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+  return await response.json()
+}
