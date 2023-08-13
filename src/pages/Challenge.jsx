@@ -26,6 +26,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getFileLanguage } from "../utils/fileHelper";
 import { toast } from "react-toastify";
+import { BiSolidSave } from "react-icons/bi";
 
 export const loadChallenge = async ({ params }) => {
   const challengeId = params.id;
@@ -253,7 +254,7 @@ const Challenge = () => {
                             onClick={handleSaveChallenge}
                             disabled={!enableSaveButton}
                           >
-                            Save
+                            Save <BiSolidSave className="text-xl"></BiSolidSave>
                           </button>
                         </div>
                       </div>

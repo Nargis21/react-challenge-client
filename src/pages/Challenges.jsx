@@ -4,6 +4,7 @@ import { getAllChallenges } from "../api/api";
 import { defer, useLoaderData, Await, useNavigate } from "react-router-dom";
 import useToken from "../hooks/useToken";
 import ChallengeCard from "../components/ChallengeCard";
+import { GrPowerReset } from "react-icons/gr";
 
 export const loadChallenges = async ({ params }) => {
   const challenges = await getAllChallenges();
@@ -222,7 +223,7 @@ const Challenges = () => {
             onClick={resetFilters}
             className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
           >
-            Reset Filters
+            Reset Filters <GrPowerReset className="text-xl"></GrPowerReset>
           </button>
         </div>
       </div>

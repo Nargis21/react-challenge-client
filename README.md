@@ -4,11 +4,11 @@
     </a>
     
 </p>
-<p align="center" style="font-size: 40px;">
+<h1 align="center"">
 <a href="https://react-challenge-1e086.web.app/" target="_blank">
         React Challenge
     </a>
-</p>
+</h1>
 
 <h3 align="center">Take a Challenge on React? 👉 <a href="https://react-challenge-1e086.web.app/" target="_blank">
        Explore Now 
@@ -40,11 +40,11 @@ Please access `React Challenge` using the URL:
 
 ## 🏗️ Challenge Category
 
-- You can find challenges based on categories, like `useState`, `useEffect`,`Router`,`Debugging` such kind of react core concepts as a category.
+- You can find challenges based on categories, like `useState`, `useEffect`, `Router`, `Debugging` such kind of react core concepts as a category.
 
-## 📢 Challenge Level
+## 📢 Difficulty Level
 
-- There are three kind level such as `Easy`,`Medium`,`Advance`. Take challenges to level up your react concepts.
+- There are three kind difficulty level such as `Easy`, `Medium`, `Hard`. Take challenges to level up your react concepts.
 
 ## 💻 Live Code Editor
 
@@ -57,7 +57,7 @@ Please access `React Challenge` using the URL:
 
 ## 🔍 Search Challenges
 
-- Search a challenges Title, Category or Level.
+- Search challenges by Title, Category or Level.
 
 ## 🎿 Filter Challenges
 
@@ -77,7 +77,7 @@ Please access `React Challenge` using the URL:
 - [Mongo DB](https://harperdb.io/https://www.mongodb.com/): A flexible Data Store
 - [Node.Js](https://nodejs.org/en): Powerful Javascript runtime.
 - [Express.Js](http://expressjs.com/): A easier and simple Node.Js library
-- [Codesandbox/sandpack-react](https://sandpack.codesandbox.io/): Run any JavaScript and Node.js app in any browser.
+- [codesandbox/sandpack-react](https://sandpack.codesandbox.io/): Run any JavaScript and Node.js app in any browser.
 - [monaco-editor/react](https://www.npmjs.com/package/@monaco-editor/react): The Monaco Editor is the code editor that powers VS Code.
 - [Tailwind](https://tailwindcss.com/): A popular css framework
 - [daisyUI](https://daisyui.com/): An amazing Tailwind based component library

@@ -2,6 +2,8 @@ import Lottie from "react-lottie";
 import banner from "../assets/home.json";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import { FaReact, FaHandPointRight } from "react-icons/fa";
+import { BsFire } from "react-icons/bs";
 
 const Home = () => {
   const defaultOptions = {
@@ -21,9 +23,10 @@ const Home = () => {
           <div className="chat-bubble bg-gradient-to-r from-emerald-300 to-green-300 lg:text-6xl md:text-4xl text-2xl font-bold text-white leading-normal">
             <div className="p-4 ">
               <h1>Take a Challenge on</h1>
-              <div className="flex items-center gap-2">
-                <span className="text-slate-600">React</span>
-              </div>
+
+              <p className="text-slate-600 flex gap-2 mt-4">
+                React <BsFire></BsFire>
+              </p>
             </div>
           </div>
         </div>
@@ -33,7 +36,10 @@ const Home = () => {
           onClick={() => navigate(`/challenges`)}
         >
           <div className="chat-bubble bg-gradient-to-r from-emerald-300 to-green-300 ">
-            <h1 className="p-2 text-white font-bold text-xl">Explore Now</h1>
+            <h1 className="p-2 text-white font-bold text-xl underline flex gap-2 items-center">
+              <FaHandPointRight className="text-slate-600 text-2xl"></FaHandPointRight>{" "}
+              Explore Now
+            </h1>
           </div>
         </div>
       </div>
