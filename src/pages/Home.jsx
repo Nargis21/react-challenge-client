@@ -1,6 +1,5 @@
 import Lottie from "react-lottie";
 import banner from "../assets/home.json";
-import react from "../assets/react.json";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 
@@ -13,14 +12,7 @@ const Home = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const defaultOptions2 = {
-    loop: true,
-    autoplay: true,
-    animationData: react,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+
   const navigate = useNavigate();
   return (
     <div className="flex lg:flex-row flex-col gap-6 justify-evenly py-10 items-center bg-green-100 h-screen">
@@ -31,12 +23,6 @@ const Home = () => {
               <h1>Take a Challenge on</h1>
               <div className="flex items-center gap-2">
                 <span className="text-slate-600">React</span>
-
-                <Lottie
-                  options={defaultOptions2}
-                  // height={60}
-                  width={80}
-                />
               </div>
             </div>
           </div>
