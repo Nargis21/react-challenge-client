@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { SandpackProvider, 
   SandpackLayout, 
   SandpackCodeEditor, 
@@ -6,134 +6,128 @@ import { SandpackProvider,
   SandpackFileExplorer,
   SandpackTests,
   SandpackCodeViewer,
-  SandpackConsole
+  SandpackConsole,
+  useSandpack,
+  useActiveCode,
+  SandpackStack,
+  FileTabs
 } from "@codesandbox/sandpack-react"
 import { Editor } from "@monaco-editor/react"
+import { getFileLanguage } from "../utils/fileHelper";
 
-const reactTemplateFiles = {
-    "/styles.css": {
-      code: `body {
-    font-family: sans-serif;
-    -webkit-font-smoothing: auto;
-    -moz-font-smoothing: auto;
-    -moz-osx-font-smoothing: grayscale;
-    font-smoothing: auto;
-    text-rendering: optimizeLegibility;
-    font-smooth: always;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
+function MonacoEditor({ setFiles }) {
+  const { code, updateCode } = useActiveCode();
+  const { sandpack } = useSandpack();
+  const activeFile = sandpack.activeFile;
+
+  console.log("active file : ", sandpack.activeFile);
+
+  function handleUpdateCode(value) {
+    updateCode(value || "");
+    setFiles((currentFiles) => ({
+      ...currentFiles,
+      [`${activeFile}`]: { code: value },
+    }));
   }
-  
-  h1 {
-    font-size: 1.5rem;
-  }`,
-  },
-  "/App.js": {
-      code: `export default function App() {
-  return <h1>Hello world</h1>
-}
-`,
-    },
-    "/index.js": {
-      code: `import React, { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./styles.css";
 
-import App from "./App";
-
-const root = createRoot(document.getElementById("root"));
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);`,
-    },
-    "/public/index.html": {
-      code: `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-</html>`,
-    },
-    "/package.json": {
-      code: JSON.stringify({
-        dependencies: {
-          react: "^18.0.0",
-          "react-dom": "^18.0.0",
-          "react-scripts": "^5.0.0",
-        },
-        main: "/index.js",
-      }),
-    },
+  return (
+    <SandpackStack style={{ height: "100%", margin: 0 }}>
+      {/* <FileTabs /> */}
+      {/* <div style={{ flex: 1, paddingTop: 8, background: "#1e1e1e" }}> */}
+      <Editor
+        height="100%"
+        language={getFileLanguage(activeFile)}
+        theme="vs-dark"
+        key={activeFile}
+        defaultValue={code}
+        onChange={handleUpdateCode}
+      />
+      {/* </div> */}
+    </SandpackStack>
+  );
 }
 
-// const templateFileForSandbox = {
-//   ...reactTemplateFiles, 
-//   "/package.json": JSON.stringify({reactTemplateFiles["/package.json"].code})
-// }
+function CodeEditorWrapper({ setFiles }){
+  const {code, updateCode} = useActiveCode()
+  const { sandpack } = useSandpack();
+  const activeFile = sandpack.activeFile;
 
-const testMarkdown = `
-## Overview
-
-* Follows [CommonMark](https://commonmark.org)
-* Optionally follows [GitHub Flavored Markdown](https://github.github.com/gfm/)
-* Renders actual React elements instead of using dangerouslySetInnerHTML
-* Lets you define your own components (to render MyHeading instead of h1)
-* Has a lot of plugins
-
-## Table of contents
-
-Here is an example of a plugin in action
-([remark-toc](https://github.com/remarkjs/remark-toc)).
-This section is replaced by an actual table of contents.
-
-## Syntax highlighting
-
-Here is an example of a plugin to highlight code:
-[rehype-highlight](https://github.com/rehypejs/rehype-highlight).
-`
-function changeFileObject(fileObj){
-  const fileKeys = fileObj.keys()
-  let str = `
-  const fileObject = { 
-  `
-  fileKeys?.map(key => {
-    str = str + `"${key}": {code: \` ${fileObj[key].code} \`},\n`
-  })
-  str = str + `
+  function handleUpdateCode(value) {
+    updateCode(value || "");
+    setFiles((currentFiles) => ({
+      ...currentFiles,
+      [activeFile]: { code: code },
+    }));
   }
-  `
-  console.log('str : ', str)
-}
+  return (
+    <SandpackCodeEditor 
+          showTabs
+          showLineNumbers={true}
+          showInlineErrors
+          wrapContent
+          closableTabs
+          onChange={handleUpdateCode}
+          />
+  )
 
-const js = `
-const fileObject = { 
-  "/styles.css": {code: \`${reactTemplateFiles["/styles.css"].code}\`},
-  "/App.js": {code: \`${reactTemplateFiles["/App.js"].code}\`},
-  "/index.js": {code: \`${reactTemplateFiles["/index.js"].code}\`},
-  "/public/index.html": {code: \`${reactTemplateFiles["/public/index.html"].code}\`},
-  "/package.json": {code: \`${reactTemplateFiles["/package.json"].code}\`},
+  // return (
+  //   <Editor 
+  //    height="100%"
+  //    defaultLanguage="javascript"
+  //    defaultValue={code}
+  //    onChange={value => handleUpdateCode(value)}
+  //    key={activeFile}
+  //    language={getFileLanguage(activeFile)}
+  //    theme="vs-dark"
+  //   />
+  // )
 }
-`
 
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { defaultFilesWithTests, defaultMarkdown } from "../config/challenge";
+import { client } from "../api/api-client";
 
 
 export default function CreateChallenge(){
 
-  const [description, setDescription] = useState("")
-  const [files, setFiles] = useState(() => reactTemplateFiles);
-  const [markdown, setMardown] = useState(() => (testMarkdown))
-  console.log('files : ',)
+  const [files, setFiles] = useState(() => defaultFilesWithTests);
+  const [markdown, setMardown] = useState(() => (defaultMarkdown))
+  const [fileName, setFileName] = useState("")
+  const [token, setToken] = useState(() =>
+    window.localStorage.getItem("accessToken")
+  );
+  console.log('files : ',files)
 
-  
+  function handleAddFile(){
+    const newFileName = fileName
+    setFiles(currentFiles => {
+       if(currentFiles.newFileName){
+        return currentFiles
+       }else{
+        return {...currentFiles, [newFileName]: ``}
+       }
+    })
+  }
+
+  async function handleFormSubmit(event){
+    event.preventDefault()
+    const formBody = {}
+    const formData = new FormData(event.currentTarget)
+    formData.forEach((value, property) => formBody[property] = value);
+
+    const reqBody = {
+      title: formBody.title,
+      challengeCategory: formBody.challengeCategory,
+      difficultyLevel: formBody.difficultyLevel,
+      description: markdown,
+      files: JSON.stringify(files)
+    }
+    console.log('reqBody : ', reqBody)
+
+    // send req to backend
+    await client('challenges', {data: reqBody, token})
+  }
 
   return (
     <>
@@ -141,15 +135,16 @@ export default function CreateChallenge(){
       Create Challenge
     </div>
 
+    <form onSubmit={handleFormSubmit}>
     <div className="w-full h-[500px]">
       <div className="max-w-lg mx-auto">
-        <form className="w-full flex flex-col justify-center align-center">
+        <div className="w-full flex flex-col justify-center align-center">
 
           <div className="form-control w-full">
           <label className="label">
             <span className="label-text">Challenge Title?</span>
           </label>
-          <input type="text" placeholder="Type here" className="input input-bordered w-full" />
+          <input name="title" type="text" placeholder="Type here" className="input input-bordered w-full" />
           {/* <label className="label">
             <span className="label-text-alt">Bottom Left label</span>
             <span className="label-text-alt">Bottom Right label</span>
@@ -160,7 +155,7 @@ export default function CreateChallenge(){
           <label className="label">
             <span className="label-text">Challenge Category</span>
           </label>
-          <select className="select select-bordered">
+          <select name="challengeCategory" className="select select-bordered">
             <option disabled selected>Pick one</option>
             <option>UI</option>
             <option>Custom Hooks</option>
@@ -177,7 +172,7 @@ export default function CreateChallenge(){
           <label className="label">
             <span className="label-text">Difficulty Level</span>
           </label>
-          <select className="select select-bordered">
+          <select name="difficultyLevel" className="select select-bordered">
             <option disabled selected>Pick one</option>
             <option>Easy</option>
             <option>Medium</option>
@@ -188,13 +183,7 @@ export default function CreateChallenge(){
             <span className="label-text-alt">Alt label</span>
           </label> */}
           </div>
-
-          <div>
-            
           </div>
-
-
-          </form>
       </div>
 
       <div className="w-full mx-auto my-6">
@@ -219,7 +208,7 @@ export default function CreateChallenge(){
       <div>
       <div className="w-full mx-auto my-6">
         <div>File Object</div>
-        <SandpackProvider template="react" theme="dark" files={reactTemplateFiles}
+        <SandpackProvider template="react" theme="dark" files={files}
       options={{ 
         visibleFiles: [""],
         activeFile: "/App.js",
@@ -227,29 +216,34 @@ export default function CreateChallenge(){
       }}
       >
 
-        <div className="flex h-[500px] p-2">
-          <div className="w-[100%] border-dashed border-2 border-sky-500">
-          <Editor
-            height="465px"
-            width="100%"
-            language="javascript"
-            theme="vs-dark"
-            defaultValue={js}
-            onChange={(value) => setMardown(value)}
-          />
+        <div className="flex my-4 p-2">
+          <div className="w-[100%] py-4 border-dashed border-2 border-sky-500">
+            <div className="max-w-lg mx-auto">
+              <div className="w-full flex flex-col justify-center align-center">
+              <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text">Add File</span>
+              </label>
+              <input type="text" value={fileName} onChange={(e) => setFileName(e.target.value)} placeholder="e.g : /filename.ext" className="input text-slate-500 input-bordered w-full" />
+              {/* <label className="label">
+                <span className="label-text-alt">Bottom Left label</span>
+                <span className="label-text-alt">Bottom Right label</span>
+              </label> */}
+              <div className="py-4">
+               <button className="btn btn-sm btn-success" onClick={handleAddFile}>Add</button>
+              </div>
+              
+              </div>
+              </div>
+            </div>
           </div>
         </div>
-     
-        <SandpackLayout >     
+
+        <div className="my-4 py-4 h-[500px]">
+        <SandpackLayout className="h-full">     
           <SandpackFileExplorer />
-          <SandpackCodeEditor 
-          showTabs
-          showLineNumbers={true}
-          showInlineErrors
-          wrapContent
-          closableTabs
-          />
-          {/* <SandpackCodeViewer /> */}
+          {/* <MonacoEditor setFiles={setFiles} /> */}
+          <CodeEditorWrapper setFiles={setFiles} />
           <SandpackPreview 
             showNavigator={true} 
             showOpenInCodeSandbox={false}
@@ -257,12 +251,18 @@ export default function CreateChallenge(){
           {/* <SandpackTests /> */}
           {/* <SandpackConsole /> */}
         </SandpackLayout>
+        </div>
+
       </SandpackProvider>
       </div>
       </div>
 
-    </div>
+      <div className="flex justify-center items-center">
+        <button type="submit" className="btn btn-success">Submit</button>
+      </div>
 
+    </div>
+    </form>
     </>
   )
 }
