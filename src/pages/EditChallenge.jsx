@@ -23,8 +23,6 @@ function MonacoEditor({ setFiles }) {
   const { sandpack } = useSandpack();
   const activeFile = sandpack.activeFile;
 
-  console.log("active file : ", sandpack.activeFile);
-
   function handleUpdateCode(value) {
     updateCode(value || "");
     setFiles((currentFiles) => ({
@@ -109,9 +107,6 @@ export default function EditChallenge() {
   );
   const [fileName, setFileName] = useState("");
 
-  console.log("challenge: ", challenge?.data?._id);
-  console.log("files : ", files);
-
   function handleAddFile() {
     const newFileName = fileName;
     setFiles((currentFiles) => {
@@ -133,7 +128,6 @@ export default function EditChallenge() {
       description: markdown,
       files: JSON.stringify(files),
     };
-    console.log("reqBody : ", reqBody);
 
     // send req to backend
     const res = await client(`challenges/${challenge?.data?._id}`, {
@@ -190,10 +184,12 @@ export default function EditChallenge() {
               <option disabled selected>
                 Pick one
               </option>
-              <option>UI</option>
-              <option>Custom Hooks</option>
-              <option>User Events</option>
-              <option>Pattern</option>
+              <option>useState</option>
+              <option>Router</option>
+              <option>useEffect</option>
+              <option>Debugging</option>
+              <option>useNavigate</option>
+              <option>useRef</option>
             </select>
             {/* <label className="label">
             <span className="label-text font-semibold text-gray-600-alt">Alt label</span>

@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { defer, useLoaderData, Await } from "react-router-dom";
+import { defer, useLoaderData, Await, useNavigate } from "react-router-dom";
 import { getChallengeById } from "../api/api";
 import * as React from "react";
 import Split from "react-split";
@@ -93,8 +93,6 @@ function MonacoEditor({ setFiles }) {
   const { sandpack } = useSandpack();
   const activeFile = sandpack.activeFile;
 
-  console.log("active file : ", sandpack.activeFile);
-
   function handleUpdateCode(value) {
     updateCode(value || "");
     setFiles((currentFiles) => ({
@@ -126,9 +124,8 @@ const Challenge = () => {
   const [token, setToken] = useState(() =>
     window.localStorage.getItem("accessToken")
   );
-  console.log("challenge data : ", challenge);
+  const navigate = useNavigate();
   const [files, setFiles] = useState(() => JSON.parse(challenge.data.files));
-  console.log("files : ", files);
   const [showConsole, setShowConsole] = useState(true);
   const [showConsoleOnRight, setShowConsoleOnRight] = useState(true);
   const [allTabs, setAllTabs] = useState([
@@ -152,6 +149,11 @@ const Challenge = () => {
   const [activeTab, setActiveTab] = useState(allTabs[0]);
 
   async function handleSaveChallenge() {
+    if (!token) {
+      navigate("/login");
+      toast.error("Please Login");
+      return;
+    }
     setEnableSaveButton(false);
     const updatedChallengeData = {
       challengeId: challenge.data.challengeId ?? challenge.data._id,
