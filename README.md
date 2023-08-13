@@ -1,181 +1,90 @@
 <p align="center">
     <a href="https://tryshape.vercel.app/" target="_blank">
-        <img src="./src//assets//react.json" alt="logo" width="125"/>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" alt="logo" width="125"/>
     </a>
     
 </p>
-<p align="center">
-<img src="./public/readme/tryshape-text-transparent.png" alt="name"/>
-</p>
-
-<h4 align="center">Create, Export, Share, and Use any Shapes of your choice.</h4>
-
-<p align="center">
-<a href="https://github.com/TryShape/tryshape/blob/master/LICENSE" target="blank">
-<img src="https://img.shields.io/github/license/TryShape/tryshape?style=flat-square" alt="tryshape licence" />
-</a>
-<a href="https://github.com/TryShape/tryshape/fork" target="blank">
-<img src="https://img.shields.io/github/forks/TryShape/tryshape?style=flat-square" alt="tryshape forks"/>
-</a>
-<a href="https://github.com/TryShape/tryshape/stargazers" target="blank">
-<img src="https://img.shields.io/github/stars/TryShape/tryshape?style=flat-square" alt="tryshape stars"/>
-</a>
-<a href="https://github.com/TryShape/tryshape/issues" target="blank">
-<img src="https://img.shields.io/github/issues/TryShape/tryshape?style=flat-square" alt="tryshape issues"/>
-</a>
-<a href="https://github.com/TryShape/tryshape/pulls" target="blank">
-<img src="https://img.shields.io/github/issues-pr/TryShape/tryshape?style=flat-square" alt="tryshape pull-requests"/>
-</a>
-<a href="https://twitter.com/intent/tweet?text=👋%20Check%20this%20amazing%20app%20https://tryshape.vercel.app/,%20created%20by%20@tapasadhikary%20and%20friends%0A%0A%23DEVCommunity%20%23100DaysOfCode%20%23tryshape"><img src="https://img.shields.io/twitter/url?label=Share%20on%20Twitter&style=social&url=https%3A%2F%2Fgithub.com%2FTryShape%2Ftryshape"></a>
-
-</p>
-
-<p align="center">
-    <a href="https://tryshape.vercel.app/" target="blank">View Demo</a>
-    ·
-    <a href="https://github.com/TryShape/tryshape/issues/new/choose">Report Bug</a>
-    ·
-    <a href="https://github.com/TryShape/tryshape/issues/new/choose">Request Feature</a>
-</p>
-
-# 👋 Introducing `TryShape`
-
-<p align="center">
-    <a href="https://tryshape.vercel.app" target="blank"/>
-        <img src="./public/readme/landing.png" alt="landing" />
+<p align="center" style="font-size: 40px;">
+<a href="https://tryshape.vercel.app/" target="_blank">
+        React Challenge
     </a>
 </p>
 
-`TryShape` is an opensource platform to create shapes of your choice using a simple, easy-to-use interface. You can create banners, circles, polygonal shapes, export them as SVG, PNG, and even as CSS.
+<h3 align="center">Take a Challenge on React? 👉 <a href="https://tryshape.vercel.app/" target="_blank">
+       Explore Now 
+    </a></h3>
 
-# 🚀 Demo
+# 👋 Introducing `React Challenge`
 
-Here is a quick demo of the app. We hope you enjoy it.
+<p align="center">
+    <a href="https://tryshape.vercel.app" target="blank"/>
+        <img src="./src//assets//images/home.jpg" alt="landing" />
+    </a>
+</p>
 
-> [The Demo Link](https://www.youtube.com/watch?v=CB9xkhzkrYE)
+`React Challenge` is an platform to take challenge on `React` using a simple, easy-to-use interface. You can take challenge as your level.
 
-Liked it? Please give a ⭐️ to <b>TryShape</b> to build its triceps 💪 stronger.
+# 🚀 Use React Challenge
 
-### Many Thanks to all the `Stargazers` who has supported this project with stars(⭐)
-
-[![Stargazers repo roster for @TryShape/tryshape](https://reporoster.com/stars/TryShape/tryshape)](https://github.com/TryShape/tryshape/stargazers)
-
-# 💻 Use TryShape
-
-Please access TryShape using the URL:
+Please access `React Challenge` using the URL:
 
 > https://tryshape.vercel.app/
 
 # 🔥 Features
 
-`TryShape` comes with a bundle of features already. You can do the followings with it,
+`React Challenge` comes with a bundle of features already. You can do the followings with it,
 
-## 🔢 Listing Shapes
+## 🎯 Take Challenge
 
-- List out shapes for you to pick and use.
+- Take challenges on `React` with different react core concepts as your prefer level.
 
-## 🏗️ Create Shapes
+## 🏗️ Challenge Category
 
-- Create any shapes using an intuitive editor.
-- Create Polygonal, Circular, Elliptical shapes without knowing the underlying complexities like CSS clip-path.
-- Add/Remove vertices, join them, drag-drop to position them to create a shape.
-- Provide your choice of colors, add the contextual information as notes while creating the shapes.
-- Are you an expert in CSS clip-path? Great, you can add a clip-path value directly and start from there.
+- You can find challenges based on categories, like `useState`, `useEffect`,`Router`,`Debugging` such kind of react core concepts as a category.
 
-## 📢 Controlling the Visibility of Shapes
+## 📢 Challenge Level
 
-- You can create a shape and share it with the TryShape community by making it public.
-- Do you want to keep your creativity private? No worries, that's possible too.
+- There are three kind level such as `Easy`,`Medium`,`Advance`. Take challenges to level up your react concepts.
 
-## 💘 Like Shapes
+## 💻 Live Code Editor
 
-- Liked a shape and want to add it to your shape collection? You can do that just with a click. Want to undo? That's supported as well.
+- This is one of the key feature of this platform. You get a live code editor which have `Live preview`,`Console`, and most amazing `Test` feature.
 
-## ✨ Export Shapes
+## ✨ Save Challenges
 
-- Export the shapes to use in your application.
-- Export the shapes as PNG, JPEG, and SVG files.
-- Single-Click Copy of the underlying CSS and clip-path property to use directly into your web app.
+- You can save any challenge with your current progress.
+- Can back to the previous challenge with previous progress.
 
-## 🔍 Search Shapes
+## 🔍 Search Challenges
 
-- Search a shape with key-in search.
+- Search a challenges Title, Category or Level.
 
-## 🎿 Sort Shapes
+## 🎿 Filter Challenges
 
-- Sort shapes by, most liked, recent, and oldest.
+- Filter challenges by Category or Level.
 
 ## 🔑 Authentication & Authorization
 
-- Features like export, like, create, edit shapes need you to authenticate with the app. You can use your Gmail or GitHub credentials to authenticate to the app. It is secured and powered by `Google Firebase`.
+- Features like save challenge need you to authenticate with the app. You can use your Gmail credentials to authenticate to the app or continue with google account. It is secured and powered by `Firebase`.
 
 ## 📱 Responsive and mobile-friendly
 
-- Use `TryShape` seamlessly from any device.
-
-# 🏗️ How to Set up `TryShape` for Development?
-
-You can run TryShape locally with a few easy steps.
-
-1. Clone the repository
-
-```bash
-git clone https://github.com/TryShape/tryshape.git
-```
-
-2. Change the working directory
-
-```bash
-cd tryshape
-```
-
-3. Install dependencies
-
-```bash
-npm install # or, yarn install
-```
-
-4. Create `.env` file in root and add your variables
-
-```bash
-NEXT_PUBLIC_DB_URL= YOUR_HARPER_DB_DATABASE_URL
-NEXT_PUBLIC_DB_AUTHORIZATION= YOUR_HARPER_DB_AUTHORIZATION_ID
-
-NEXT_PUBLIC_FIREBASE_AUTHORIZATION=YOUR_FIREBASE_AUTH_KEY
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_AUTH_DOMAIN
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=YOUR_FIREBASE_PROJECT_BUCKET
-NEXT_PUBLIC_FIREBASE_MESSAGING_SERNDER_ID=YOUR_FIREBASE_MESSAGING_SERNDER_ID
-NEXT_PUBLIC_FIREBASE_APP_ID=YOUR_FIREBASE_APP_ID
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=YOUR_FIREBASE_MEASUREMENT_ID
-```
-
-5. Run the app
-
-```bash
-npm run dev # or, yarn dev
-```
-
-That's All!!! Now open [localhost:3000](http://localhost:3000/) to see the app.
+- Use `React Challenge` seamlessly from any device.
 
 # 🍔 Built With
 
-- [Next JS](https://nextjs.org/): The coolest React-based framework on the planet
-- [Harper DB](https://harperdb.io/): A flexible Data Store
+- [React Js](https://nextjs.org/): The coolest Javascript framework
+- [Mongo DB](https://harperdb.io/): A flexible Data Store
+- [Node.Js](https://harperdb.io/): Powerful Javascript runtime.
+- [Express.Js](https://harperdb.io/): A easier and simple Node.Js library
+- [Tailwind](https://react-bootstrap.github.io/): A popular frontend framework built-for React
+- [daisyUI](https://styled-components.com/): An amazing Tailwind based component library
 - [react-icons](https://react-icons.github.io/react-icons/): One shop for all the icons
-- [react-hot-toast](https://react-hot-toast.com/): Super cool toast messages
-- [firebase](https://firebase.google.com/): Authentication services
-- [date-fns](https://date-fns.org/): Date formatting
-- [axios](https://github.com/axios/axios): Makes API calls easy
-- [react-bootstrap](https://react-bootstrap.github.io/): A popular frontend framework built-for React
-- [Styled Components](https://styled-components.com/): Visual primitives for the component age
-- [react-clip-path](https://github.com/atapas/react-clip-path#readme): A home grown module to handle clip-path property in a React app.
-- [react-draggable](https://github.com/mzabriskie/react-draggable): Make a HTML element draggable in React
-- [react-loader-spinner](https://mhnpd.github.io/react-loader-spinner/): Provides simple React SVG spinner component which can be implemented for async await operation before data loads to the view
-- [react-switch](https://github.com/markusenglund/react-switch#readme): A draggable toggle-switch component for React.
-- [downloadjs](http://danml.com/download.html): Trigger a download from JavaScript
-- [html-to-image](https://github.com/bubkoo/html-to-image#readme): Converts an HTML element to image
-- [Vercel](http://vercel.com/): Best for Hosting a Next.js app
+- [react-toastify](https://react-hot-toast.com/): Super cool toast messages
+- [Firebase](https://firebase.google.com/): Authentication services and Frontend hoisting
+- [Vercel](http://vercel.com/): Amazing platform for hoisting
+- [Codesandbox/sandpack-react](http://vercel.com/): Amazing platform for hoisting
+- [monaco-editor/react](http://vercel.com/): Amazing platform for hoisting
 
 # 🛡️ License
 

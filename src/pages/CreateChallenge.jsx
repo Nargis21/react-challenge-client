@@ -88,6 +88,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { defaultFilesWithTests, defaultMarkdown } from "../config/challenge";
 import { client } from "../api/api-client";
+import { toast } from "react-toastify";
 
 export default function CreateChallenge() {
   const [files, setFiles] = useState(() => defaultFilesWithTests);
@@ -125,7 +126,12 @@ export default function CreateChallenge() {
     console.log("reqBody : ", reqBody);
 
     // send req to backend
-    await client("challenges", { data: reqBody, token });
+    const data = await client("challenges", { data: reqBody, token });
+    if (data !== (undefined | null)) {
+      toast.success("Challenge Added");
+    } else {
+      toast.error("Failed to add challenge");
+    }
   }
 
   return (
