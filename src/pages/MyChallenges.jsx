@@ -1,54 +1,40 @@
-import React, { useState } from "react";
-import { client } from "../api/api-client";
-import { getAllChallenges, getUserChallenge } from "../api/api";
-import { defer, useLoaderData, Await, useNavigate } from "react-router-dom";
+import { getUserChallenge } from "../api/api";
+import { Link, defer, useLoaderData } from "react-router-dom";
+import MyChallengeCard from "../components/MyChallengeCard";
 
-export const loadUserChallenges = async ({ params }) => {
+export const loadUserChallenges = async () => {
   const challenges = await getUserChallenge();
   return defer({ challenges });
 };
 
 const MyChallenges = () => {
-  const navigate = useNavigate();
   const { challenges } = useLoaderData();
 
   return (
-    <div>
-      <h1>My Challenges</h1>
-
-      <div className="overflow-x-auto">
-        {challenges?.success && challenges?.data?.challenges.length > 0 ? (
-          <table className="table table-zebra">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Difficulty level</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {challenges?.success &&
-                challenges?.data?.challenges.map((challenge) => (
-                  <tr
-                    key={challenge._id}
-                    onClick={() =>
-                      navigate(`/challenges/${challenge.challengeId}`)
-                    }
-                    className="cursor-pointer"
-                  >
-                    <td>{challenge.title}</td>
-                    <td>{challenge.challengeCategory}</td>
-                    <td>{challenge.difficultyLevel}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        ) : (
-          <div>No Challenges Found</div>
-        )}
-      </div>
+    <div className="h-screen bg-green-100">
+      {challenges?.success && challenges?.data?.challenges.length > 0 ? (
+        <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 ">
+          {challenges?.success &&
+            challenges?.data?.challenges.map((challenge) => (
+              <MyChallengeCard
+                key={challenge._id}
+                challenge={challenge}
+              ></MyChallengeCard>
+            ))}
+        </div>
+      ) : (
+        <div className="text-center lg:py-36 md:py-24 py-12">
+          <p className="lg:text-5xl md:text-3xl text-2xl font-semibold">
+            You have no attempted challenge.
+          </p>
+          <Link
+            to="/challenges"
+            className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none mt-10"
+          >
+            Explore Now
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

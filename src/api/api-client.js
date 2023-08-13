@@ -1,8 +1,10 @@
+import { toast } from "react-toastify"
+
 const apiURL = import.meta.env.VITE_backend_api
 
 async function client(
   endpoint,
-  {data, token, headers: customHeaders, ...customConfig} = {},
+  { data, token, headers: customHeaders, ...customConfig } = {},
 ) {
   const config = {
     method: data ? 'POST' : 'GET',
@@ -21,15 +23,16 @@ async function client(
       // await auth.logout()
       // refresh the page for them
       window.location.assign(window.location)
-      return Promise.reject({message: 'Please re-authenticate.'})
+      return Promise.reject({ message: 'Please re-authenticate.' })
     }
     const data = await response.json()
     if (response.ok) {
       return data
+
     } else {
       return Promise.reject(data)
     }
   })
 }
 
-export {client}
+export { client }

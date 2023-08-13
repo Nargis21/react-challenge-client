@@ -6,7 +6,7 @@ const App = () => {
   return (
     <div>
       <MainLayout></MainLayout>
-      <ToastContainer></ToastContainer>
+      <ToastContainer position="bottom-right" theme="dark"></ToastContainer>
     </div>
   );
 };
