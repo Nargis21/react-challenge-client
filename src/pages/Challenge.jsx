@@ -136,7 +136,7 @@ const Challenge = () => {
       tabName: "Challenge Description",
       content: (
         <ReactMarkdown className="markdown" rehypePlugins={[remarkGfm]}>
-          {testMarkdown}
+          {challenge?.data?.description}
         </ReactMarkdown>
       ),
     },
