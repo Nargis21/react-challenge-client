@@ -98,12 +98,16 @@ export default function EditChallenge() {
   );
   const [files, setFiles] = useState(() => JSON.parse(challenge?.data?.files));
   const [markdown, setMardown] = useState(() => challenge?.data?.description);
-  const [title, setTitle] = useState(() => challenge?.data?.title)
-  const [difficultyLevel, setDifficultyLevel] = useState(() => challenge?.data?.difficultyLevel)
-  const [challengeCategory, setChallengeCategory] = useState(() => challenge?.data?.challengeCategory)
+  const [title, setTitle] = useState(() => challenge?.data?.title);
+  const [difficultyLevel, setDifficultyLevel] = useState(
+    () => challenge?.data?.difficultyLevel
+  );
+  const [challengeCategory, setChallengeCategory] = useState(
+    () => challenge?.data?.challengeCategory
+  );
   const [fileName, setFileName] = useState("");
 
-  console.log('challenge: ', challenge)
+  console.log("challenge: ", challenge);
   console.log("files : ", files);
 
   function handleAddFile() {
@@ -130,7 +134,7 @@ export default function EditChallenge() {
     console.log("reqBody : ", reqBody);
 
     // send req to backend
-    // await client("challenges", { data: reqBody, token });
+    await client("challenges", { data: reqBody, token });
   }
 
   return (
@@ -139,159 +143,159 @@ export default function EditChallenge() {
         <h1 className="text-2xl py-6 text-center font-semibold text-gray-600">
           Add New Challenge
         </h1>
-          <div className="w-full flex flex-col justify-center align-center">
-            <div className="form-control w-full mb-2">
-              <label className="label">
-                <span className="label-text font-semibold text-gray-600 font-semibold text-gray-600">
-                  Challenge Title
-                </span>
-              </label>
-              <input
-                name="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                type="text"
-                placeholder="Type here"
-                className="input input-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400  w-full"
-              />
-              {/* <label className="label">
+        <div className="w-full flex flex-col justify-center align-center">
+          <div className="form-control w-full mb-2">
+            <label className="label">
+              <span className="label-text font-semibold text-gray-600 font-semibold text-gray-600">
+                Challenge Title
+              </span>
+            </label>
+            <input
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              type="text"
+              placeholder="Type here"
+              className="input input-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400  w-full"
+            />
+            {/* <label className="label">
             <span className="label-text font-semibold text-gray-600-alt">Bottom Left label</span>
             <span className="label-text font-semibold text-gray-600-alt">Bottom Right label</span>
           </label> */}
-            </div>
-            <div className="form-control w-full mb-2">
-              <label className="label">
-                <span className="label-text font-semibold text-gray-600">
-                  Challenge Category
-                </span>
-              </label>
-              <select
-                name="challengeCategory"
-                value={challengeCategory}
-                onChange={(e) => setChallengeCategory(e.target.value)}
-                className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
-              >
-                <option disabled selected>
-                  Pick one
-                </option>
-                <option>UI</option>
-                <option>Custom Hooks</option>
-                <option>User Events</option>
-                <option>Pattern</option>
-              </select>
-              {/* <label className="label">
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-          </label> */}
-            </div>
-            <div className="form-control w-full mb-2">
-              <label className="label">
-                <span className="label-text font-semibold text-gray-600">
-                  Difficulty Level
-                </span>
-              </label>
-              <select
-                value={difficultyLevel}
-                onChange={(e) => setDifficultyLevel(e.target.value)}
-                name="difficultyLevel"
-                className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
-              >
-                <option disabled selected>
-                  Pick one
-                </option>
-                <option>Easy</option>
-                <option>Medium</option>
-                <option>Hard</option>
-              </select>
-              {/* <label className="label">
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-          </label> */}
-            </div>
           </div>
-
-          <div className="w-full mb-2">
+          <div className="form-control w-full mb-2">
             <label className="label">
               <span className="label-text font-semibold text-gray-600">
-                Description
+                Challenge Category
               </span>
             </label>
-
-            <div className=" mb-3">
-              <Editor
-                height="465px"
-                width="100%"
-                language="markdown"
-                theme="vs-dark"
-                defaultValue={markdown}
-                onChange={(value) => setMardown(value)}
-              />
-            </div>
-            <div className="border-2 border-emerald-400 overflow-y-scroll px-4 bg-base-100">
-              <ReactMarkdown className="markdown" rehypePlugins={[remarkGfm]}>
-                {markdown}
-              </ReactMarkdown>
-            </div>
-          </div>
-
-          <div className="w-full mb-2">
-            <label className="label">
-              <span className="label-text font-semibold text-gray-600">
-                File Object
-              </span>
-            </label>
-            <SandpackProvider
-              template="react"
-              theme="dark"
-              files={files}
-              options={{
-                visibleFiles: [""],
-                activeFile: "/App.js",
-                readOnly: true,
-              }}
+            <select
+              name="challengeCategory"
+              value={challengeCategory}
+              onChange={(e) => setChallengeCategory(e.target.value)}
+              className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
             >
-              <div className="form-control mb-3">
-                <div className=" input-group">
-                  <input
-                    type="text"
-                    value={fileName}
-                    onChange={(e) => setFileName(e.target.value)}
-                    placeholder="e.g : /filename.ext"
-                    className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-emerald-400 text-slate-800"
-                  />
-                  <button
-                    className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
-                    onClick={handleAddFile}
-                  >
-                    Add
-                  </button>
-                </div>
-              </div>
+              <option disabled selected>
+                Pick one
+              </option>
+              <option>UI</option>
+              <option>Custom Hooks</option>
+              <option>User Events</option>
+              <option>Pattern</option>
+            </select>
+            {/* <label className="label">
+            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
+            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
+          </label> */}
+          </div>
+          <div className="form-control w-full mb-2">
+            <label className="label">
+              <span className="label-text font-semibold text-gray-600">
+                Difficulty Level
+              </span>
+            </label>
+            <select
+              value={difficultyLevel}
+              onChange={(e) => setDifficultyLevel(e.target.value)}
+              name="difficultyLevel"
+              className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
+            >
+              <option disabled selected>
+                Pick one
+              </option>
+              <option>Easy</option>
+              <option>Medium</option>
+              <option>Hard</option>
+            </select>
+            {/* <label className="label">
+            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
+            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
+          </label> */}
+          </div>
+        </div>
 
-              <div className="">
-                <SandpackLayout className="h-full">
-                  <SandpackFileExplorer />
-                  {/* <MonacoEditor setFiles={setFiles} /> */}
-                  <CodeEditorWrapper setFiles={setFiles} />
-                  {/* <SandpackPreview
+        <div className="w-full mb-2">
+          <label className="label">
+            <span className="label-text font-semibold text-gray-600">
+              Description
+            </span>
+          </label>
+
+          <div className=" mb-3">
+            <Editor
+              height="465px"
+              width="100%"
+              language="markdown"
+              theme="vs-dark"
+              defaultValue={markdown}
+              onChange={(value) => setMardown(value)}
+            />
+          </div>
+          <div className="border-2 border-emerald-400 overflow-y-scroll px-4 bg-base-100">
+            <ReactMarkdown className="markdown" rehypePlugins={[remarkGfm]}>
+              {markdown}
+            </ReactMarkdown>
+          </div>
+        </div>
+
+        <div className="w-full mb-2">
+          <label className="label">
+            <span className="label-text font-semibold text-gray-600">
+              File Object
+            </span>
+          </label>
+          <SandpackProvider
+            template="react"
+            theme="dark"
+            files={files}
+            options={{
+              visibleFiles: [""],
+              activeFile: "/App.js",
+              readOnly: true,
+            }}
+          >
+            <div className="form-control mb-3">
+              <div className=" input-group">
+                <input
+                  type="text"
+                  value={fileName}
+                  onChange={(e) => setFileName(e.target.value)}
+                  placeholder="e.g : /filename.ext"
+                  className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-emerald-400 text-slate-800"
+                />
+                <button
+                  className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
+                  onClick={handleAddFile}
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+
+            <div className="">
+              <SandpackLayout className="h-full">
+                <SandpackFileExplorer />
+                {/* <MonacoEditor setFiles={setFiles} /> */}
+                <CodeEditorWrapper setFiles={setFiles} />
+                {/* <SandpackPreview
                       showNavigator={true}
                       showOpenInCodeSandbox={false}
                     /> */}
-                  {/* <SandpackTests /> */}
-                  {/* <SandpackConsole /> */}
-                </SandpackLayout>
-              </div>
-            </SandpackProvider>
-          </div>
+                {/* <SandpackTests /> */}
+                {/* <SandpackConsole /> */}
+              </SandpackLayout>
+            </div>
+          </SandpackProvider>
+        </div>
 
-          <div className="flex justify-center items-center mt-6 w-full">
-            <button
-              onClick={handleFormSubmit}
-              className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none w-full"
-            >
-              Submit
-            </button>
-          </div>
+        <div className="flex justify-center items-center mt-6 w-full">
+          <button
+            onClick={handleFormSubmit}
+            className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none w-full"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );
