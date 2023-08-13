@@ -1,6 +1,12 @@
 import { getAllChallenges } from "../api/api";
-import {useState} from 'react'
-import { defer, useLoaderData, Await, useNavigate, useRevalidator } from "react-router-dom";
+import { useState } from "react";
+import {
+  defer,
+  useLoaderData,
+  Await,
+  useNavigate,
+  useRevalidator,
+} from "react-router-dom";
 import ChallengeCard from "../components/ChallengeCard";
 import { deleteChallengeById } from "../api/api";
 import { toast } from "react-toastify";
@@ -11,73 +17,244 @@ export const loadChallenges = async ({ params }) => {
 };
 
 const ManageChallenges = () => {
-  const navigate = useNavigate()
-  let revalidator = useRevalidator()
+  const navigate = useNavigate();
+  let revalidator = useRevalidator();
   const { challenges } = useLoaderData();
   const [token, setToken] = useState(() =>
     window.localStorage.getItem("accessToken")
   );
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("");
+
+  // Search challenges by title or author
+  const searchedChallenges = challenges?.data.filter((challenge) => {
+    const titleMatch = challenge.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const categoryMatch = challenge.challengeCategory
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const difficultyMatch = challenge.difficultyLevel
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return titleMatch || categoryMatch || difficultyMatch;
+  });
+
+  // Extract unique categories from the challenge data
+  const categories = [
+    ...new Set(
+      challenges?.data.map((challenge) => challenge.challengeCategory)
+    ),
+  ];
+
+  // Extract unique difficulties from the challenge data
+  const difficulties = [
+    ...new Set(challenges?.data.map((challenge) => challenge.difficultyLevel)),
+  ];
+
+  // Filter challenges by category
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  // Filter challenges by publication difficulty
+  const handleDifficultyChange = (e) => {
+    setSelectedDifficulty(e.target.value);
+  };
+
+  const filteredChallengesByCategoryAndDifficulty = searchedChallenges?.filter(
+    (challenge) => {
+      const categoryMatch =
+        !selectedCategory ||
+        challenge.challengeCategory.toLowerCase() ===
+          selectedCategory.toLowerCase();
+      const difficultyMatch =
+        !selectedDifficulty ||
+        challenge.difficultyLevel.toLowerCase() ===
+          selectedDifficulty.toLowerCase();
+      return categoryMatch && difficultyMatch;
+    }
+  );
+
+  // Reset filters
+  const resetFilters = () => {
+    setSearchTerm("");
+    setSelectedCategory("");
+    setSelectedDifficulty("");
+  };
+
   const handleEditChallenge = (challengeId) => {
-    navigate(`/manage-challenges/edit/${challengeId}`)
-  }
+    navigate(`/manage-challenges/edit/${challengeId}`);
+  };
 
   const handleDeleteChallenge = async (challengeId) => {
-    const result = await deleteChallengeById(challengeId)
-    console.log('result : ', result)
-    if(result.success){
-      toast.success('Successfully Deleted.')
-    }else{
-      toast.error('Deletion Failed')
+    const result = await deleteChallengeById(challengeId);
+    console.log("result : ", result);
+    if (result.success) {
+      toast.success("Successfully Deleted.");
+    } else {
+      toast.error("Deletion Failed");
     }
-    revalidator.revalidate()
-  }
+    revalidator.revalidate();
+  };
 
   return (
+    // <div>
+    //   <div>
+    //     <button
+    //       className="btn btn-success"
+    //       onClick={() => navigate("/manage-challenges/create")}
+    //     >
+    //       Create Challenge
+    //     </button>
+    //   </div>
+
+    //   <div className="bg-green-100">
+    //     <div className="">
+    //       <div className="overflow-x-auto">
+    //         <table className="table">
+    //           {/* head */}
+    //           <thead>
+    //             <tr>
+    //               <th>Title</th>
+    //               <th>Category</th>
+    //               <th>Level</th>
+    //               <th>Description</th>
+    //               <th>Action</th>
+    //             </tr>
+    //           </thead>
+    //           <tbody>
+    //             {challenges?.success &&
+    //               challenges?.data?.map((challenge) => (
+    //                 <tr key={challenge._id}>
+    //                   <th>{challenge.title}</th>
+    //                   <td>{challenge.challengeCategory}</td>
+    //                   <td>{challenge.difficultyLevel}</td>
+    //                   <td className="flex">
+    //                     <button
+    //                       onClick={() => handleEditChallenge(challenge._id)}
+    //                       className="btn btn-success"
+    //                     >
+    //                       Edit
+    //                     </button>
+    //                     <button
+    //                       onClick={() => handleDeleteChallenge(challenge._id)}
+    //                       className="btn btn-error"
+    //                     >
+    //                       Delete
+    //                     </button>
+    //                   </td>
+    //                 </tr>
+    //               ))}
+    //           </tbody>
+    //         </table>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
     <div>
-      <h1>Manage Challenges</h1>
+      <div className="grid lg:grid-cols-10 grid-cols-1 gap-4 lg:p-12 p-4 bg-green-200">
+        <div className="col-span-6">
+          <input
+            type="text"
+            placeholder="Search by Title or Category"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 w-full"
+          />
+        </div>
 
-      <div>
-      <button className="btn btn-success" onClick={() => navigate('/manage-challenges/create')}>Create Challenge</button>
-      </div>
+        <div className="flex lg:gap-4 gap-2 col-span-4">
+          <select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 "
+          >
+            <option value="">Category</option>
+            {categories.map((category, i) => (
+              <option key={i} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
 
-      <div className="bg-green-100">
-        <div className="">
-        <div className="overflow-x-auto">
-  <table className="table">
-    {/* head */}
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Level</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
+          <select
+            value={selectedDifficulty}
+            onChange={handleDifficultyChange}
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          >
+            <option value="">Difficulty</option>
+            {difficulties.map((difficulty, i) => (
+              <option key={i} value={difficulty}>
+                {difficulty}
+              </option>
+            ))}
+          </select>
 
-           {challenges?.success &&
-            challenges?.data?.map((challenge) => (
-              <tr key={challenge._id}>
-              <th>{challenge.title}</th>
-              <td>{challenge.challengeCategory}</td>
-              <td>{challenge.difficultyLevel}</td>
-              <td className="flex">
-                <button onClick={() => handleEditChallenge(challenge._id)} className="btn btn-success">Edit</button>
-                <button onClick={() => handleDeleteChallenge(challenge._id)} className="btn btn-error">Delete</button>
-              </td>
-            </tr>
-          ))}
-      
-      
-
-    </tbody>
-  </table>
-</div>
-         
+          <button
+            onClick={resetFilters}
+            className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
+          >
+            Reset Filters
+          </button>
         </div>
       </div>
-
+      <div className="bg-green-100">
+        <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-center items-center py-6">
+          <h1 className="text-2xl py-6 text-center font-semibold text-gray-600">
+            Manage Challenges
+          </h1>
+          <button
+            className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
+            onClick={() => navigate("/manage-challenges/create")}
+          >
+            Create new Challenge
+          </button>
+        </div>
+        <div className="overflow-x-auto flex items-center justify-center pb-6">
+          <table className="table lg:w-[70%] md:w-[90%] w-[99%] shadow-lg bg-base-100 p-4 rounded">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>SL.NO</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Level</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {challenges?.success &&
+                filteredChallengesByCategoryAndDifficulty.map(
+                  (challenge, index) => (
+                    <tr key={challenge._id}>
+                      <th>{index + 1}</th>
+                      <th>{challenge.title}</th>
+                      <td>{challenge.challengeCategory}</td>
+                      <td>{challenge.difficultyLevel}</td>
+                      <td className="flex gap-2">
+                        <button
+                          onClick={() => handleEditChallenge(challenge._id)}
+                          className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none btn-sm"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteChallenge(challenge._id)}
+                          className="btn btn-error btn-sm"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                )}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

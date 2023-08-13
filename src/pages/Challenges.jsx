@@ -121,18 +121,6 @@ const Challenges = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
 
-  // async function handleNewChallenge() {
-  //   const challengeFiles = {
-  //     title: "default challenge 1",
-  //     challengeCategory: "UI",
-  //     description: "create a button with Click text",
-  //     difficultyLevel: "Easy",
-  //     files: JSON.stringify(filesWithTests),
-  //   };
-  //   console.log("token : ", token);
-  //   await client("challenges", { data: challengeFiles, token });
-  // }
-
   // Search challenges by title or author
   const searchedChallenges = challenges?.data.filter((challenge) => {
     const titleMatch = challenge.title
@@ -238,7 +226,7 @@ const Challenges = () => {
           </button>
         </div>
       </div>
-      <div className="h-screen bg-green-100">
+      <div className=" bg-green-100">
         <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 ">
           {challenges?.success &&
             filteredChallengesByCategoryAndDifficulty?.map((challenge) => (

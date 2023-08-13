@@ -10,17 +10,18 @@ export const loadUserChallenges = async () => {
 
 const MyChallenges = () => {
   const { challenges } = useLoaderData();
-  let revalidator = useRevalidator()
+  let revalidator = useRevalidator();
 
-  async function handleRemoveChallenge(challengeId){
-    const result = await removeUserChallengeById(challengeId)
-    console.log('res : ',result)
-    if(result.success){
-      toast.success('Successfully Removed.')
-    }else{
-      toast.error('Remove Failed')
+  async function handleRemoveChallenge(challengeId) {
+    console.log(challengeId);
+    const result = await removeUserChallengeById(challengeId);
+    console.log("res : ", result);
+    if (result.success) {
+      toast.success("Successfully Removed.");
+    } else {
+      toast.error("Remove Failed");
     }
-    revalidator.revalidate()
+    revalidator.revalidate();
   }
 
   return (
