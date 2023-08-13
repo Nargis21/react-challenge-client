@@ -15,6 +15,8 @@ import {
 } from "@codesandbox/sandpack-react";
 import { Editor } from "@monaco-editor/react";
 import { getFileLanguage } from "../utils/fileHelper";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function MonacoEditor({ setFiles }) {
   const { code, updateCode } = useActiveCode();
@@ -90,13 +92,16 @@ import { defaultFilesWithTests, defaultMarkdown } from "../config/challenge";
 import { client } from "../api/api-client";
 
 export default function CreateChallenge() {
+  const navigate = useNavigate()
   const [files, setFiles] = useState(() => defaultFilesWithTests);
   const [markdown, setMardown] = useState(() => defaultMarkdown);
   const [fileName, setFileName] = useState("");
+  const [title, setTitle] = useState("")
+  const [difficultyLevel, setDifficultyLevel] = useState("Pick one")
+  const [challengeCategory, setChallengeCategory] = useState("Pick one")
   const [token, setToken] = useState(() =>
     window.localStorage.getItem("accessToken")
   );
-  console.log("files : ", files);
 
   function handleAddFile() {
     const newFileName = fileName;
@@ -111,21 +116,24 @@ export default function CreateChallenge() {
 
   async function handleFormSubmit(event) {
     event.preventDefault();
-    const formBody = {};
-    const formData = new FormData(event.currentTarget);
-    formData.forEach((value, property) => (formBody[property] = value));
 
-    const reqBody = {
-      title: formBody.title,
-      challengeCategory: formBody.challengeCategory,
-      difficultyLevel: formBody.difficultyLevel,
+   const reqBody = {
+      title,
+      challengeCategory,
+      difficultyLevel,
       description: markdown,
       files: JSON.stringify(files),
     };
     console.log("reqBody : ", reqBody);
 
     // send req to backend
-    await client("challenges", { data: reqBody, token });
+    const res = await client("challenges", { data: reqBody, token });
+    if(res.success){
+      toast.success('Successfully Created New Challenge')
+      navigate('/manage-challenges')
+    }else{
+      toast.error('Something Wrong')
+    }
   }
 
   return (
@@ -134,7 +142,6 @@ export default function CreateChallenge() {
         <h1 className="text-2xl py-6 text-center font-semibold text-gray-600">
           Add New Challenge
         </h1>
-        <form onSubmit={handleFormSubmit}>
           <div className="w-full flex flex-col justify-center align-center">
             <div className="form-control w-full mb-2">
               <label className="label">
@@ -143,6 +150,8 @@ export default function CreateChallenge() {
                 </span>
               </label>
               <input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 name="title"
                 type="text"
                 placeholder="Type here"
@@ -161,6 +170,8 @@ export default function CreateChallenge() {
               </label>
               <select
                 name="challengeCategory"
+                value={challengeCategory}
+                onChange={(e) => setChallengeCategory(e.target.value)}
                 className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
               >
                 <option disabled selected>
@@ -184,6 +195,8 @@ export default function CreateChallenge() {
               </label>
               <select
                 name="difficultyLevel"
+                value={difficultyLevel}
+                onChange={(e) => setDifficultyLevel(e.target.value)}
                 className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
               >
                 <option disabled selected>
@@ -224,7 +237,7 @@ export default function CreateChallenge() {
             </div>
           </div>
 
-          <div className="w-full mb-2">
+          {/* <div className="w-full mb-2">
             <label className="label">
               <span className="label-text font-semibold text-gray-600">
                 File Object
@@ -261,28 +274,24 @@ export default function CreateChallenge() {
               <div className="">
                 <SandpackLayout className="h-full">
                   <SandpackFileExplorer />
-                  {/* <MonacoEditor setFiles={setFiles} /> */}
-                  <CodeEditorWrapper setFiles={setFiles} />
-                  {/* <SandpackPreview
+                  <SandpackPreview
                       showNavigator={true}
                       showOpenInCodeSandbox={false}
-                    /> */}
-                  {/* <SandpackTests /> */}
-                  {/* <SandpackConsole /> */}
+                    />
                 </SandpackLayout>
               </div>
             </SandpackProvider>
-          </div>
+          </div> */}
 
           <div className="flex justify-center items-center mt-6 w-full">
             <button
-              type="submit"
+              onClick={handleFormSubmit}
               className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none w-full"
             >
               Submit
             </button>
           </div>
-        </form>
+
       </div>
     </div>
   );

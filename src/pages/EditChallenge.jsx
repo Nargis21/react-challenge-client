@@ -15,7 +15,8 @@ import {
 } from "@codesandbox/sandpack-react";
 import { Editor } from "@monaco-editor/react";
 import { getFileLanguage } from "../utils/fileHelper";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function MonacoEditor({ setFiles }) {
   const { code, updateCode } = useActiveCode();
@@ -92,6 +93,7 @@ import { client } from "../api/api-client";
 
 export default function EditChallenge() {
   const { challenge } = useLoaderData();
+  const navigate = useNavigate()
   const [enableSaveButton, setEnableSaveButton] = useState(true);
   const [token, setToken] = useState(() =>
     window.localStorage.getItem("accessToken")
@@ -103,7 +105,7 @@ export default function EditChallenge() {
   const [challengeCategory, setChallengeCategory] = useState(() => challenge?.data?.challengeCategory)
   const [fileName, setFileName] = useState("");
 
-  console.log('challenge: ', challenge)
+  console.log('challenge: ', challenge?.data?._id)
   console.log("files : ", files);
 
   function handleAddFile() {
@@ -130,7 +132,14 @@ export default function EditChallenge() {
     console.log("reqBody : ", reqBody);
 
     // send req to backend
-    // await client("challenges", { data: reqBody, token });
+    const res = await client(`challenges/${challenge?.data?._id}`, { data: reqBody, token, method: 'PUT' });
+    if(res.success){
+      toast.success('Successfully Edited')
+      navigate('/manage-challenges')
+    }else{
+      toast.error('Something Wrong')
+    }
+    
   }
 
   return (
@@ -234,7 +243,7 @@ export default function EditChallenge() {
             </div>
           </div>
 
-          <div className="w-full mb-2">
+          {/* <div className="w-full mb-2">
             <label className="label">
               <span className="label-text font-semibold text-gray-600">
                 File Object
@@ -271,18 +280,11 @@ export default function EditChallenge() {
               <div className="">
                 <SandpackLayout className="h-full">
                   <SandpackFileExplorer />
-                  {/* <MonacoEditor setFiles={setFiles} /> */}
                   <CodeEditorWrapper setFiles={setFiles} />
-                  {/* <SandpackPreview
-                      showNavigator={true}
-                      showOpenInCodeSandbox={false}
-                    /> */}
-                  {/* <SandpackTests /> */}
-                  {/* <SandpackConsole /> */}
                 </SandpackLayout>
               </div>
             </SandpackProvider>
-          </div>
+          </div> */}
 
           <div className="flex justify-center items-center mt-6 w-full">
             <button
