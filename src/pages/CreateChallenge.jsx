@@ -15,6 +15,8 @@ import {
 } from "@codesandbox/sandpack-react";
 import { Editor } from "@monaco-editor/react";
 import { getFileLanguage } from "../utils/fileHelper";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function MonacoEditor({ setFiles }) {
   const { code, updateCode } = useActiveCode();
@@ -88,16 +90,18 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { defaultFilesWithTests, defaultMarkdown } from "../config/challenge";
 import { client } from "../api/api-client";
-import { toast } from "react-toastify";
 
 export default function CreateChallenge() {
+  const navigate = useNavigate();
   const [files, setFiles] = useState(() => defaultFilesWithTests);
   const [markdown, setMardown] = useState(() => defaultMarkdown);
   const [fileName, setFileName] = useState("");
+  const [title, setTitle] = useState("");
+  const [difficultyLevel, setDifficultyLevel] = useState("Pick one");
+  const [challengeCategory, setChallengeCategory] = useState("Pick one");
   const [token, setToken] = useState(() =>
     window.localStorage.getItem("accessToken")
   );
-  console.log("files : ", files);
 
   function handleAddFile() {
     const newFileName = fileName;
@@ -112,25 +116,23 @@ export default function CreateChallenge() {
 
   async function handleFormSubmit(event) {
     event.preventDefault();
-    const formBody = {};
-    const formData = new FormData(event.currentTarget);
-    formData.forEach((value, property) => (formBody[property] = value));
 
     const reqBody = {
-      title: formBody.title,
-      challengeCategory: formBody.challengeCategory,
-      difficultyLevel: formBody.difficultyLevel,
+      title,
+      challengeCategory,
+      difficultyLevel,
       description: markdown,
       files: JSON.stringify(files),
     };
     console.log("reqBody : ", reqBody);
 
     // send req to backend
-    const data = await client("challenges", { data: reqBody, token });
-    if (data !== (undefined | null)) {
-      toast.success("Challenge Added");
+    const res = await client("challenges", { data: reqBody, token });
+    if (res.success) {
+      toast.success("Successfully Created New Challenge");
+      navigate("/manage-challenges");
     } else {
-      toast.error("Failed to add challenge");
+      toast.error("Something Wrong");
     }
   }
 
@@ -140,97 +142,104 @@ export default function CreateChallenge() {
         <h1 className="text-2xl py-6 text-center font-semibold text-gray-600">
           Add New Challenge
         </h1>
-        <form onSubmit={handleFormSubmit}>
-          <div className="w-full flex flex-col justify-center align-center">
-            <div className="form-control w-full mb-2">
-              <label className="label">
-                <span className="label-text font-semibold text-gray-600 font-semibold text-gray-600">
-                  Challenge Title
-                </span>
-              </label>
-              <input
-                name="title"
-                type="text"
-                placeholder="Type here"
-                className="input input-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400  w-full"
-              />
-              {/* <label className="label">
+        <div className="w-full flex flex-col justify-center align-center">
+          <div className="form-control w-full mb-2">
+            <label className="label">
+              <span className="label-text font-semibold text-gray-600 font-semibold text-gray-600">
+                Challenge Title
+              </span>
+            </label>
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              name="title"
+              type="text"
+              placeholder="Type here"
+              className="input input-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400  w-full"
+            />
+            {/* <label className="label">
             <span className="label-text font-semibold text-gray-600-alt">Bottom Left label</span>
             <span className="label-text font-semibold text-gray-600-alt">Bottom Right label</span>
           </label> */}
-            </div>
-            <div className="form-control w-full mb-2">
-              <label className="label">
-                <span className="label-text font-semibold text-gray-600">
-                  Challenge Category
-                </span>
-              </label>
-              <select
-                name="challengeCategory"
-                className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
-              >
-                <option disabled selected>
-                  Pick one
-                </option>
-                <option>UI</option>
-                <option>Custom Hooks</option>
-                <option>User Events</option>
-                <option>Pattern</option>
-              </select>
-              {/* <label className="label">
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-          </label> */}
-            </div>
-            <div className="form-control w-full mb-2">
-              <label className="label">
-                <span className="label-text font-semibold text-gray-600">
-                  Difficulty Level
-                </span>
-              </label>
-              <select
-                name="difficultyLevel"
-                className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
-              >
-                <option disabled selected>
-                  Pick one
-                </option>
-                <option>Easy</option>
-                <option>Medium</option>
-                <option>Hard</option>
-              </select>
-              {/* <label className="label">
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-          </label> */}
-            </div>
           </div>
-
-          <div className="w-full mb-2">
+          <div className="form-control w-full mb-2">
             <label className="label">
               <span className="label-text font-semibold text-gray-600">
-                Description
+                Challenge Category
               </span>
             </label>
-
-            <div className=" mb-3">
-              <Editor
-                height="465px"
-                width="100%"
-                language="markdown"
-                theme="vs-dark"
-                defaultValue={markdown}
-                onChange={(value) => setMardown(value)}
-              />
-            </div>
-            <div className="border-2 border-emerald-400 overflow-y-scroll px-4 bg-base-100">
-              <ReactMarkdown className="markdown" rehypePlugins={[remarkGfm]}>
-                {markdown}
-              </ReactMarkdown>
-            </div>
+            <select
+              name="challengeCategory"
+              value={challengeCategory}
+              onChange={(e) => setChallengeCategory(e.target.value)}
+              className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
+            >
+              <option disabled selected>
+                Pick one
+              </option>
+              <option>useState</option>
+              <option>Router</option>
+              <option>useEffect</option>
+              <option>Debugging</option>
+              <option>useNavigate</option>
+              <option>useRef</option>
+            </select>
+            {/* <label className="label">
+            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
+            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
+          </label> */}
           </div>
+          <div className="form-control w-full mb-2">
+            <label className="label">
+              <span className="label-text font-semibold text-gray-600">
+                Difficulty Level
+              </span>
+            </label>
+            <select
+              name="difficultyLevel"
+              value={difficultyLevel}
+              onChange={(e) => setDifficultyLevel(e.target.value)}
+              className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
+            >
+              <option disabled selected>
+                Pick one
+              </option>
+              <option>Easy</option>
+              <option>Medium</option>
+              <option>Hard</option>
+            </select>
+            {/* <label className="label">
+            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
+            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
+          </label> */}
+          </div>
+        </div>
 
-          <div className="w-full mb-2">
+        <div className="w-full mb-2">
+          <label className="label">
+            <span className="label-text font-semibold text-gray-600">
+              Description
+            </span>
+          </label>
+
+          <div className=" mb-3">
+            <Editor
+              height="465px"
+              width="100%"
+              language="markdown"
+              theme="vs-dark"
+              defaultValue={markdown}
+              onChange={(value) => setMardown(value)}
+            />
+          </div>
+          <div className="border-2 border-emerald-400 overflow-y-scroll px-4 bg-base-100">
+            <ReactMarkdown className="markdown" rehypePlugins={[remarkGfm]}>
+              {markdown}
+            </ReactMarkdown>
+          </div>
+        </div>
+
+        {/* <div className="w-full mb-2">
             <label className="label">
               <span className="label-text font-semibold text-gray-600">
                 File Object
@@ -267,28 +276,23 @@ export default function CreateChallenge() {
               <div className="">
                 <SandpackLayout className="h-full">
                   <SandpackFileExplorer />
-                  {/* <MonacoEditor setFiles={setFiles} /> */}
-                  <CodeEditorWrapper setFiles={setFiles} />
-                  {/* <SandpackPreview
+                  <SandpackPreview
                       showNavigator={true}
                       showOpenInCodeSandbox={false}
-                    /> */}
-                  {/* <SandpackTests /> */}
-                  {/* <SandpackConsole /> */}
+                    />
                 </SandpackLayout>
               </div>
             </SandpackProvider>
-          </div>
+          </div> */}
 
-          <div className="flex justify-center items-center mt-6 w-full">
-            <button
-              type="submit"
-              className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none w-full"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
+        <div className="flex justify-center items-center mt-6 w-full">
+          <button
+            onClick={handleFormSubmit}
+            className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none w-full"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );

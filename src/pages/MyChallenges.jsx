@@ -1,6 +1,7 @@
-import { getUserChallenge } from "../api/api";
-import { Link, defer, useLoaderData } from "react-router-dom";
+import { getUserChallenge, removeUserChallengeById } from "../api/api";
+import { Link, defer, useLoaderData, useRevalidator } from "react-router-dom";
 import MyChallengeCard from "../components/MyChallengeCard";
+import { toast } from "react-toastify";
 
 export const loadUserChallenges = async () => {
   const challenges = await getUserChallenge();
@@ -9,6 +10,19 @@ export const loadUserChallenges = async () => {
 
 const MyChallenges = () => {
   const { challenges } = useLoaderData();
+  let revalidator = useRevalidator();
+
+  async function handleRemoveChallenge(challengeId) {
+    console.log(challengeId);
+    const result = await removeUserChallengeById(challengeId);
+    console.log("res : ", result);
+    if (result.success) {
+      toast.success("Successfully Removed.");
+    } else {
+      toast.error("Remove Failed");
+    }
+    revalidator.revalidate();
+  }
 
   return (
     <div className="h-screen bg-green-100">
@@ -19,6 +33,7 @@ const MyChallenges = () => {
               <MyChallengeCard
                 key={challenge._id}
                 challenge={challenge}
+                deleteHandler={handleRemoveChallenge}
               ></MyChallengeCard>
             ))}
         </div>

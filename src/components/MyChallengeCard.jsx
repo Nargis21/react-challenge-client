@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 
-const MyChallengeCard = ({ challenge }) => {
+const MyChallengeCard = ({ challenge, deleteHandler }) => {
   const { challengeId, title, difficultyLevel, challengeCategory } = challenge;
   const navigate = useNavigate();
+
   return (
     <div
       data-aos="zoom-in"
@@ -26,7 +27,7 @@ const MyChallengeCard = ({ challenge }) => {
           Continue Challenge
         </h1>
         <label
-          //   onClick={() => dispatch(setDeleteConfirm(_id))}
+          onClick={() => deleteHandler(challengeId)}
           className="btn btn-sm bg-red-200 hover:bg-red-400 border-none"
           htmlFor="delete-book-modal"
         >

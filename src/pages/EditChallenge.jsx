@@ -15,7 +15,8 @@ import {
 } from "@codesandbox/sandpack-react";
 import { Editor } from "@monaco-editor/react";
 import { getFileLanguage } from "../utils/fileHelper";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function MonacoEditor({ setFiles }) {
   const { code, updateCode } = useActiveCode();
@@ -92,6 +93,7 @@ import { client } from "../api/api-client";
 
 export default function EditChallenge() {
   const { challenge } = useLoaderData();
+  const navigate = useNavigate();
   const [enableSaveButton, setEnableSaveButton] = useState(true);
   const [token, setToken] = useState(() =>
     window.localStorage.getItem("accessToken")
@@ -107,7 +109,7 @@ export default function EditChallenge() {
   );
   const [fileName, setFileName] = useState("");
 
-  console.log("challenge: ", challenge);
+  console.log("challenge: ", challenge?.data?._id);
   console.log("files : ", files);
 
   function handleAddFile() {
@@ -134,14 +136,24 @@ export default function EditChallenge() {
     console.log("reqBody : ", reqBody);
 
     // send req to backend
-    await client("challenges", { data: reqBody, token });
+    const res = await client(`challenges/${challenge?.data?._id}`, {
+      data: reqBody,
+      token,
+      method: "PUT",
+    });
+    if (res.success) {
+      toast.success("Successfully Edited");
+      navigate("/manage-challenges");
+    } else {
+      toast.error("Something Wrong");
+    }
   }
 
   return (
     <div className="flex justify-center items-center bg-green-100 py-10">
       <div className="lg:w-[60%] md:w-[80%] w-[95%] shadow-xl p-6 rounded bg-green-200">
         <h1 className="text-2xl py-6 text-center font-semibold text-gray-600">
-          Add New Challenge
+          Edit Challenge
         </h1>
         <div className="w-full flex flex-col justify-center align-center">
           <div className="form-control w-full mb-2">
@@ -151,9 +163,9 @@ export default function EditChallenge() {
               </span>
             </label>
             <input
-              name="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              name="title"
               type="text"
               placeholder="Type here"
               className="input input-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400  w-full"
@@ -195,9 +207,9 @@ export default function EditChallenge() {
               </span>
             </label>
             <select
+              name="difficultyLevel"
               value={difficultyLevel}
               onChange={(e) => setDifficultyLevel(e.target.value)}
-              name="difficultyLevel"
               className="select select-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400 "
             >
               <option disabled selected>
@@ -238,55 +250,51 @@ export default function EditChallenge() {
           </div>
         </div>
 
-        <div className="w-full mb-2">
-          <label className="label">
-            <span className="label-text font-semibold text-gray-600">
-              File Object
-            </span>
-          </label>
-          <SandpackProvider
-            template="react"
-            theme="dark"
-            files={files}
-            options={{
-              visibleFiles: [""],
-              activeFile: "/App.js",
-              readOnly: true,
-            }}
-          >
-            <div className="form-control mb-3">
-              <div className=" input-group">
-                <input
-                  type="text"
-                  value={fileName}
-                  onChange={(e) => setFileName(e.target.value)}
-                  placeholder="e.g : /filename.ext"
-                  className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-emerald-400 text-slate-800"
-                />
-                <button
-                  className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
-                  onClick={handleAddFile}
-                >
-                  Add
-                </button>
+        {/* <div className="w-full mb-2">
+            <label className="label">
+              <span className="label-text font-semibold text-gray-600">
+                File Object
+              </span>
+            </label>
+            <SandpackProvider
+              template="react"
+              theme="dark"
+              files={files}
+              options={{
+                visibleFiles: [""],
+                activeFile: "/App.js",
+                readOnly: true,
+              }}
+            >
+              <div className="form-control mb-3">
+                <div className=" input-group">
+                  <input
+                    type="text"
+                    value={fileName}
+                    onChange={(e) => setFileName(e.target.value)}
+                    placeholder="e.g : /filename.ext"
+                    className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-emerald-400 text-slate-800"
+                  />
+                  <button
+                    className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
+                    onClick={handleAddFile}
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div className="">
-              <SandpackLayout className="h-full">
-                <SandpackFileExplorer />
-                {/* <MonacoEditor setFiles={setFiles} /> */}
-                <CodeEditorWrapper setFiles={setFiles} />
-                {/* <SandpackPreview
+              <div className="">
+                <SandpackLayout className="h-full">
+                  <SandpackFileExplorer />
+                  <SandpackPreview
                       showNavigator={true}
                       showOpenInCodeSandbox={false}
-                    /> */}
-                {/* <SandpackTests /> */}
-                {/* <SandpackConsole /> */}
-              </SandpackLayout>
-            </div>
-          </SandpackProvider>
-        </div>
+                    />
+                </SandpackLayout>
+              </div>
+            </SandpackProvider>
+          </div> */}
 
         <div className="flex justify-center items-center mt-6 w-full">
           <button
