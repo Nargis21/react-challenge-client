@@ -4,13 +4,8 @@
 
 .main_container{
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 5rem);
   background-color: #1A1A1A;
-}
-
-.header_section{
-  background-color: #303030;
-  padding: 0.4rem 1rem;
 }
 
 .main_section{

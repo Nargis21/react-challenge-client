@@ -190,7 +190,6 @@ const Challenge = () => {
       >
         <SandpackLayout>
           <div className="main_container">
-            <div className="header_section">Header</div>
             <div className="main_section">
               <Split
                 className="container"
