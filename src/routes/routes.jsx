@@ -11,6 +11,7 @@ import ManageChallenges from "../pages/ManageChallenges";
 import RequireAdmin from "../utils/RequireAdmin";
 import Challenge, {loadChallenge} from "../pages/Challenge";
 import CreateChallenge from "../pages/CreateChallenge";
+import EditChallenge from "../pages/EditChallenge";
 
 const routes = createBrowserRouter([
   {
@@ -76,6 +77,17 @@ const routes = createBrowserRouter([
                 </RequireAdmin>
               </RequireAuth>
             ),
+          },
+          {
+            path: "edit/:id",
+            element: (
+              <RequireAuth>
+                <RequireAdmin>
+                  <EditChallenge />
+                </RequireAdmin>
+              </RequireAuth>
+            ),
+            loader: loadChallenge
           }
         ]
       },
