@@ -1,16 +1,16 @@
 <p align="center">
-    <a href="https://tryshape.vercel.app/" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" alt="logo" width="125"/>
+    <a href="https://react-challenge-1e086.web.app/" target="_blank">
+        <img src="./src//assets//images/react.png" alt="logo" width="125"/>
     </a>
     
 </p>
 <p align="center" style="font-size: 40px;">
-<a href="https://tryshape.vercel.app/" target="_blank">
+<a href="https://react-challenge-1e086.web.app/" target="_blank">
         React Challenge
     </a>
 </p>
 
-<h3 align="center">Take a Challenge on React? 👉 <a href="https://tryshape.vercel.app/" target="_blank">
+<h3 align="center">Take a Challenge on React? 👉 <a href="https://react-challenge-1e086.web.app/" target="_blank">
        Explore Now 
     </a></h3>
 
@@ -28,7 +28,7 @@
 
 Please access `React Challenge` using the URL:
 
-> https://tryshape.vercel.app/
+> https://react-challenge-1e086.web.app/
 
 # 🔥 Features
 
