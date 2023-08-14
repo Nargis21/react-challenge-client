@@ -6,7 +6,7 @@ const useToken = (user, authType) => {
         const email = user?.user?.email
         const currentUser = { email: email }
         if (email) {
-            fetch(`http://localhost:5000/api/v1/user/auth/${email}`, {
+            fetch(`https://react-challenge-server.vercel.app/api/v1/user/auth/${email}`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

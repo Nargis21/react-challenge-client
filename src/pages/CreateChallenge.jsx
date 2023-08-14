@@ -23,8 +23,6 @@ function MonacoEditor({ setFiles }) {
   const { sandpack } = useSandpack();
   const activeFile = sandpack.activeFile;
 
-  console.log("active file : ", sandpack.activeFile);
-
   function handleUpdateCode(value) {
     updateCode(value || "");
     setFiles((currentFiles) => ({
@@ -124,7 +122,6 @@ export default function CreateChallenge() {
       description: markdown,
       files: JSON.stringify(files),
     };
-    console.log("reqBody : ", reqBody);
 
     // send req to backend
     const res = await client("challenges", { data: reqBody, token });

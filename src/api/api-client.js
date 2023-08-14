@@ -1,4 +1,3 @@
-import { toast } from "react-toastify"
 
 const apiURL = import.meta.env.VITE_backend_api
 
