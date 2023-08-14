@@ -8,7 +8,7 @@ const useAdmin = user => {
     useEffect(() => {
         const email = user?.email
         if (email) {
-            fetch(`http://localhost:5000/api/v1/user/admin/${email}`, {
+            fetch(`https://react-challenge-server.vercel.app/api/v1/user/admin/${email}`, {
                 method: 'GET',
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('accessToken')}`

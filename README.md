@@ -30,6 +30,10 @@ Please access `React Challenge` using the URL:
 
 > https://react-challenge-1e086.web.app/
 
+For more details, checkout the video:
+
+> https://youtu.be/aVDJLkUBMS8
+
 # 🔥 Features
 
 `React Challenge` comes with a bundle of features already. You can do the followings with it,
