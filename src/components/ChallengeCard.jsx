@@ -7,7 +7,7 @@ const ChallengeCard = ({ challenge }) => {
     <div
       onClick={() => navigate(`/challenges/${_id}`)}
       data-aos="zoom-in"
-      className="cursor-pointer p-6 shadow-xl  rounded-2xl bg-base-100 bg-gradient-to-r hover:from-emerald-300 hover:to-green-300 "
+      className="cursor-pointer p-6 shadow-xl  rounded-2xl bg-base-100 bg-gradient-to-r hover:from-emerald-300 hover:to-green-300"
     >
       <h2 className="text-xl font-semibold mb-4">{title}</h2>
       <div className="flex justify-between items-center">
@@ -16,7 +16,7 @@ const ChallengeCard = ({ challenge }) => {
         </p>
         <p className="text-sm font-semibold">
           Difficulty:{" "}
-          <span className="text-emerald-500 ">{difficultyLevel}</span>
+          <span className="text-emerald-500  ">{difficultyLevel}</span>
         </p>
       </div>
     </div>

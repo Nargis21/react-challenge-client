@@ -175,7 +175,7 @@ const Challenges = () => {
 
   return (
     <div>
-      <div className="grid lg:grid-cols-10 grid-cols-1 gap-4 lg:p-12 p-4 bg-green-200">
+      <div className=" grid lg:grid-cols-10 grid-cols-1 gap-4 lg:p-12 p-4 bg-slate-900">
         <div className="col-span-6">
           <input
             type="text"
@@ -222,7 +222,7 @@ const Challenges = () => {
           </button>
         </div>
       </div>
-      <div className=" bg-green-100">
+      <div className="h-screen bg-slate-800">
         <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 ">
           {challenges?.success &&
             filteredChallengesByCategoryAndDifficulty?.map((challenge) => (
