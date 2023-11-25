@@ -23,17 +23,23 @@ const MyChallenges = () => {
   }
 
   return (
-    <div className="h-screen bg-slate-900">
+    <div className="h-screen bg-slate-800">
       {challenges?.success && challenges?.data?.challenges.length > 0 ? (
-        <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 ">
-          {challenges?.success &&
-            challenges?.data?.challenges.map((challenge) => (
-              <MyChallengeCard
-                key={challenge._id}
-                challenge={challenge}
-                deleteHandler={handleRemoveChallenge}
-              ></MyChallengeCard>
-            ))}
+        <div>
+          <p className="text-white lg:text-4xl md:text-2xl text-xl font-semibold py-12 bg-slate-900 text-center ">
+            My Challenges
+          </p>
+
+          <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 ">
+            {challenges?.success &&
+              challenges?.data?.challenges.map((challenge) => (
+                <MyChallengeCard
+                  key={challenge._id}
+                  challenge={challenge}
+                  deleteHandler={handleRemoveChallenge}
+                ></MyChallengeCard>
+              ))}
+          </div>
         </div>
       ) : (
         <div className="text-center lg:py-36 md:py-24 py-12">
