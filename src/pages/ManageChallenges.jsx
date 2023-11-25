@@ -99,7 +99,7 @@ const ManageChallenges = () => {
 
   return (
     <div>
-      <div className="grid lg:grid-cols-10 grid-cols-1 gap-4 lg:p-12 p-4 bg-green-200">
+      <div className="grid lg:grid-cols-10 grid-cols-1 gap-4 lg:p-12 p-4 bg-slate-900">
         <div className="col-span-6">
           <input
             type="text"
@@ -146,9 +146,9 @@ const ManageChallenges = () => {
           </button>
         </div>
       </div>
-      <div className="bg-green-100">
+      <div className="bg-slate-800">
         <div className="flex lg:flex-row md:flex-row flex-col lg:gap-4 md:gap-4 justify-center items-center py-6">
-          <h1 className="text-2xl py-6 text-center font-semibold text-gray-600">
+          <h1 className="text-2xl py-6 text-center font-semibold text-white">
             Manage Challenges
           </h1>
           <button
