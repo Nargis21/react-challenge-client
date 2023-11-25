@@ -15,7 +15,7 @@ const MyChallenges = () => {
   async function handleRemoveChallenge(challengeId) {
     const result = await removeUserChallengeById(challengeId);
     if (result.success) {
-      toast.success("Successfully Removed.");
+      toast.success("Challenge Removed!");
     } else {
       toast.error("Remove Failed");
     }
@@ -23,21 +23,27 @@ const MyChallenges = () => {
   }
 
   return (
-    <div className="h-screen bg-green-100">
+    <div className="h-screen bg-slate-800">
       {challenges?.success && challenges?.data?.challenges.length > 0 ? (
-        <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 ">
-          {challenges?.success &&
-            challenges?.data?.challenges.map((challenge) => (
-              <MyChallengeCard
-                key={challenge._id}
-                challenge={challenge}
-                deleteHandler={handleRemoveChallenge}
-              ></MyChallengeCard>
-            ))}
+        <div>
+          <p className="text-white lg:text-4xl md:text-2xl text-xl font-semibold py-12 bg-slate-900 text-center ">
+            My Challenges
+          </p>
+
+          <div className=" p-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 gap-6 ">
+            {challenges?.success &&
+              challenges?.data?.challenges.map((challenge) => (
+                <MyChallengeCard
+                  key={challenge._id}
+                  challenge={challenge}
+                  deleteHandler={handleRemoveChallenge}
+                ></MyChallengeCard>
+              ))}
+          </div>
         </div>
       ) : (
         <div className="text-center lg:py-36 md:py-24 py-12">
-          <p className="lg:text-5xl md:text-3xl text-2xl font-semibold">
+          <p className="text-white lg:text-5xl md:text-3xl text-2xl font-semibold">
             You have no attempted challenge.
           </p>
           <Link

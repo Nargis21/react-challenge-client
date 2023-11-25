@@ -1,19 +1,18 @@
-import { Suspense, useState } from "react";
-import { defer, useLoaderData, Await, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { defer, useLoaderData, useNavigate } from "react-router-dom";
 import { getChallengeById } from "../api/api";
-import * as React from "react";
 import Split from "react-split";
 import "./Challenge.css";
 import { client } from "../api/api-client";
 
 import {
+  // SandpackCodeEditor,
+  // SandpackFileExplorer,
+  // SandpackCodeViewer,
   SandpackProvider,
-  SandpackLayout,
-  SandpackCodeEditor,
   SandpackPreview,
-  SandpackFileExplorer,
   SandpackTests,
-  SandpackCodeViewer,
+  SandpackLayout,
   SandpackConsole,
   useActiveCode,
   SandpackStack,
@@ -34,60 +33,60 @@ export const loadChallenge = async ({ params }) => {
   return defer({ challenge });
 };
 
-const someJSCodeExample = `
-  // The source (has been changed) is https://github.com/facebook/react/issues/5465#issuecomment-157888325
+// const someJSCodeExample = `
+//   // The source (has been changed) is https://github.com/facebook/react/issues/5465#issuecomment-157888325
 
-  const CANCELATION_MESSAGE = {
-    type: 'cancelation',
-    msg: 'operation is manually canceled',
-  };
+//   const CANCELATION_MESSAGE = {
+//     type: 'cancelation',
+//     msg: 'operation is manually canceled',
+//   };
 
-  function makeCancelable(promise) {
-    let hasCanceled_ = false;
+//   function makeCancelable(promise) {
+//     let hasCanceled_ = false;
 
-    const wrappedPromise = new Promise((resolve, reject) => {
-      promise.then(val => hasCanceled_ ? reject(CANCELATION_MESSAGE) : resolve(val));
-      promise.catch(reject);
-    });
+//     const wrappedPromise = new Promise((resolve, reject) => {
+//       promise.then(val => hasCanceled_ ? reject(CANCELATION_MESSAGE) : resolve(val));
+//       promise.catch(reject);
+//     });
 
-    return (wrappedPromise.cancel = () => (hasCanceled_ = true), wrappedPromise);
-  }
+//     return (wrappedPromise.cancel = () => (hasCanceled_ = true), wrappedPromise);
+//   }
 
-  export default makeCancelable;
-`;
-const markdown = `A paragraph with *emphasis* and **strong importance**.
+//   export default makeCancelable;
+// `;
+// const markdown = `A paragraph with *emphasis* and **strong importance**.
 
-> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
+// > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
 
-* Lists
-* [ ] todo
-* [x] done
+// * Lists
+// * [ ] todo
+// * [x] done
 
-A table:
+// A table:
 
-| a | b |
-| - | - |
-`;
-const testMarkdown = `
-## Overview
+// | a | b |
+// | - | - |
+// `;
+// const testMarkdown = `
+// ## Overview
 
-* Follows [CommonMark](https://commonmark.org)
-* Optionally follows [GitHub Flavored Markdown](https://github.github.com/gfm/)
-* Renders actual React elements instead of using dangerouslySetInnerHTML
-* Lets you define your own components (to render MyHeading instead of h1)
-* Has a lot of plugins
+// * Follows [CommonMark](https://commonmark.org)
+// * Optionally follows [GitHub Flavored Markdown](https://github.github.com/gfm/)
+// * Renders actual React elements instead of using dangerouslySetInnerHTML
+// * Lets you define your own components (to render MyHeading instead of h1)
+// * Has a lot of plugins
 
-## Table of contents
+// ## Table of contents
 
-Here is an example of a plugin in action
-([remark-toc](https://github.com/remarkjs/remark-toc)).
-This section is replaced by an actual table of contents.
+// Here is an example of a plugin in action
+// ([remark-toc](https://github.com/remarkjs/remark-toc)).
+// This section is replaced by an actual table of contents.
 
-## Syntax highlighting
+// ## Syntax highlighting
 
-Here is an example of a plugin to highlight code:
-[rehype-highlight](https://github.com/rehypejs/rehype-highlight).
-`;
+// Here is an example of a plugin to highlight code:
+// [rehype-highlight](https://github.com/rehypejs/rehype-highlight).
+// `;
 
 function MonacoEditor({ setFiles }) {
   const { code, updateCode } = useActiveCode();
@@ -127,8 +126,8 @@ const Challenge = () => {
   );
   const navigate = useNavigate();
   const [files, setFiles] = useState(() => JSON.parse(challenge.data.files));
-  const [showConsole, setShowConsole] = useState(true);
-  const [showConsoleOnRight, setShowConsoleOnRight] = useState(true);
+  // const [showConsole, setShowConsole] = useState(true);
+  // const [showConsoleOnRight, setShowConsoleOnRight] = useState(true);
   const [allTabs, setAllTabs] = useState([
     {
       tabName: "Challenge Description",
