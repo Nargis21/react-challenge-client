@@ -58,7 +58,7 @@ const SignUp = () => {
     return <Loading></Loading>;
   }
   return (
-    <div className="flex justify-center items-center py-10 bg-green-100">
+    <div className="flex justify-center items-center py-10 bg-slate-900">
       <div className="card lg:w-[35%] md:w-[60%] w-[90%] shadow-xl bg-green-200">
         <div className="card-body items-center ">
           <h2 className="card-title text-2xl">Sign Up</h2>
