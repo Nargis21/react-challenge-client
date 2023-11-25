@@ -90,7 +90,7 @@ const ManageChallenges = () => {
   const handleDeleteChallenge = async (challengeId) => {
     const result = await deleteChallengeById(challengeId);
     if (result.success) {
-      toast.success("Successfully Deleted.");
+      toast.success("Challenge Deleted!");
     } else {
       toast.error("Deletion Failed");
     }
@@ -141,12 +141,13 @@ const ManageChallenges = () => {
             onClick={resetFilters}
             className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none"
           >
-            Reset Filters <GrPowerReset className="text-xl"></GrPowerReset>
+            <span className="hidden lg:flex">Reset Filters</span>
+            <GrPowerReset className="text-xl"></GrPowerReset>
           </button>
         </div>
       </div>
       <div className="bg-green-100">
-        <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-center items-center py-6">
+        <div className="flex lg:flex-row md:flex-row flex-col lg:gap-4 md:gap-4 justify-center items-center py-6">
           <h1 className="text-2xl py-6 text-center font-semibold text-gray-600">
             Manage Challenges
           </h1>
@@ -157,8 +158,8 @@ const ManageChallenges = () => {
             Create new Challenge <IoMdCreate className="text-xl"></IoMdCreate>
           </button>
         </div>
-        <div className="overflow-x-auto flex items-center justify-center pb-6">
-          <table className="table lg:w-[70%] md:w-[90%] w-[99%] shadow-lg bg-base-100 p-4 rounded">
+        <div className=" overflow-x-auto flex items-center justify-center pb-6">
+          <table className="table lg:w-[70%] md:w-[90%] w-[99%] shadow-lg bg-base-100 lg:p-4 p-2 rounded">
             {/* head */}
             <thead>
               <tr>
@@ -183,13 +184,14 @@ const ManageChallenges = () => {
                           onClick={() => handleEditChallenge(challenge._id)}
                           className="btn bg-gradient-to-r from-emerald-300 to-green-300 hover:from-emerald-400 hover:to-green-400 border-none btn-sm"
                         >
-                          Edit <BiSolidEdit className="text-xl"></BiSolidEdit>
+                          <span className="hidden lg:flex">Edit</span>
+                          <BiSolidEdit className="text-xl"></BiSolidEdit>
                         </button>
                         <button
                           onClick={() => handleDeleteChallenge(challenge._id)}
                           className="btn btn-error btn-sm"
                         >
-                          Delete{" "}
+                          <span className="hidden lg:flex">Delete</span>
                           <BiSolidTrash className="text-xl"></BiSolidTrash>
                         </button>
                       </td>

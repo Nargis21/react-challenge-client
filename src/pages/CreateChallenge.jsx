@@ -1,88 +1,88 @@
-import { useState, useEffect } from "react";
-import {
-  SandpackProvider,
-  SandpackLayout,
-  SandpackCodeEditor,
-  SandpackPreview,
-  SandpackFileExplorer,
-  SandpackTests,
-  SandpackCodeViewer,
-  SandpackConsole,
-  useSandpack,
-  useActiveCode,
-  SandpackStack,
-  FileTabs,
-} from "@codesandbox/sandpack-react";
+import { useState } from "react";
+// import {
+//   SandpackProvider,
+//   SandpackLayout,
+//   SandpackCodeEditor,
+//   SandpackPreview,
+//   SandpackFileExplorer,
+//   SandpackTests,
+//   SandpackCodeViewer,
+//   SandpackConsole,
+//   useSandpack,
+//   useActiveCode,
+//   SandpackStack,
+//   FileTabs,
+// } from "@codesandbox/sandpack-react";
 import { Editor } from "@monaco-editor/react";
-import { getFileLanguage } from "../utils/fileHelper";
+// import { getFileLanguage } from "../utils/fileHelper";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function MonacoEditor({ setFiles }) {
-  const { code, updateCode } = useActiveCode();
-  const { sandpack } = useSandpack();
-  const activeFile = sandpack.activeFile;
+// function MonacoEditor({ setFiles }) {
+//   const { code, updateCode } = useActiveCode();
+//   const { sandpack } = useSandpack();
+//   const activeFile = sandpack.activeFile;
 
-  function handleUpdateCode(value) {
-    updateCode(value || "");
-    setFiles((currentFiles) => ({
-      ...currentFiles,
-      [`${activeFile}`]: { code: value },
-    }));
-  }
+//   function handleUpdateCode(value) {
+//     updateCode(value || "");
+//     setFiles((currentFiles) => ({
+//       ...currentFiles,
+//       [`${activeFile}`]: { code: value },
+//     }));
+//   }
 
-  return (
-    <SandpackStack style={{ height: "100%", margin: 0 }}>
-      {/* <FileTabs /> */}
-      {/* <div style={{ flex: 1, paddingTop: 8, background: "#1e1e1e" }}> */}
-      <Editor
-        height="100%"
-        language={getFileLanguage(activeFile)}
-        theme="vs-dark"
-        key={activeFile}
-        defaultValue={code}
-        onChange={handleUpdateCode}
-      />
-      {/* </div> */}
-    </SandpackStack>
-  );
-}
+//   return (
+//     <SandpackStack style={{ height: "100%", margin: 0 }}>
+//       {/* <FileTabs /> */}
+//       {/* <div style={{ flex: 1, paddingTop: 8, background: "#1e1e1e" }}> */}
+//       <Editor
+//         height="100%"
+//         language={getFileLanguage(activeFile)}
+//         theme="vs-dark"
+//         key={activeFile}
+//         defaultValue={code}
+//         onChange={handleUpdateCode}
+//       />
+//       {/* </div> */}
+//     </SandpackStack>
+//   );
+// }
 
-function CodeEditorWrapper({ setFiles }) {
-  const { code, updateCode } = useActiveCode();
-  const { sandpack } = useSandpack();
-  const activeFile = sandpack.activeFile;
+// function CodeEditorWrapper({ setFiles }) {
+//   const { code, updateCode } = useActiveCode();
+//   const { sandpack } = useSandpack();
+//   const activeFile = sandpack.activeFile;
 
-  function handleUpdateCode(value) {
-    updateCode(value || "");
-    setFiles((currentFiles) => ({
-      ...currentFiles,
-      [activeFile]: { code: code },
-    }));
-  }
-  return (
-    <SandpackCodeEditor
-      showTabs
-      showLineNumbers={true}
-      showInlineErrors
-      wrapContent
-      closableTabs
-      onChange={handleUpdateCode}
-    />
-  );
+//   function handleUpdateCode(value) {
+//     updateCode(value || "");
+//     setFiles((currentFiles) => ({
+//       ...currentFiles,
+//       [activeFile]: { code: code },
+//     }));
+//   }
+//   return (
+//     <SandpackCodeEditor
+//       showTabs
+//       showLineNumbers={true}
+//       showInlineErrors
+//       wrapContent
+//       closableTabs
+//       onChange={handleUpdateCode}
+//     />
+//   );
 
-  // return (
-  //   <Editor
-  //    height="100%"
-  //    defaultLanguage="javascript"
-  //    defaultValue={code}
-  //    onChange={value => handleUpdateCode(value)}
-  //    key={activeFile}
-  //    language={getFileLanguage(activeFile)}
-  //    theme="vs-dark"
-  //   />
-  // )
-}
+//   // return (
+//   //   <Editor
+//   //    height="100%"
+//   //    defaultLanguage="javascript"
+//   //    defaultValue={code}
+//   //    onChange={value => handleUpdateCode(value)}
+//   //    key={activeFile}
+//   //    language={getFileLanguage(activeFile)}
+//   //    theme="vs-dark"
+//   //   />
+//   // )
+// }
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -93,7 +93,6 @@ export default function CreateChallenge() {
   const navigate = useNavigate();
   const [files, setFiles] = useState(() => defaultFilesWithTests);
   const [markdown, setMardown] = useState(() => defaultMarkdown);
-  const [fileName, setFileName] = useState("");
   const [title, setTitle] = useState("");
   const [difficultyLevel, setDifficultyLevel] = useState("Pick one");
   const [challengeCategory, setChallengeCategory] = useState("Pick one");
@@ -101,16 +100,16 @@ export default function CreateChallenge() {
     window.localStorage.getItem("accessToken")
   );
 
-  function handleAddFile() {
-    const newFileName = fileName;
-    setFiles((currentFiles) => {
-      if (currentFiles.newFileName) {
-        return currentFiles;
-      } else {
-        return { ...currentFiles, [newFileName]: `` };
-      }
-    });
-  }
+  // function handleAddFile() {
+  //   const newFileName = fileName;
+  //   setFiles((currentFiles) => {
+  //     if (currentFiles.newFileName) {
+  //       return currentFiles;
+  //     } else {
+  //       return { ...currentFiles, [newFileName]: `` };
+  //     }
+  //   });
+  // }
 
   async function handleFormSubmit(event) {
     event.preventDefault();
@@ -126,23 +125,23 @@ export default function CreateChallenge() {
     // send req to backend
     const res = await client("challenges", { data: reqBody, token });
     if (res.success) {
-      toast.success("Successfully Created New Challenge");
+      toast.success("Challenge Created");
       navigate("/manage-challenges");
     } else {
-      toast.error("Something Wrong");
+      toast.error("Failed to Create Challenge");
     }
   }
 
   return (
     <div className="flex justify-center items-center bg-green-100 py-10">
-      <div className="lg:w-[60%] md:w-[80%] w-[95%] shadow-xl p-6 rounded bg-green-200">
+      <div className="lg:w-[60%] md:w-[80%] w-[95%] shadow-xl lg:p-6 md:p-4 p-2 rounded bg-green-200">
         <h1 className="text-2xl py-6 text-center font-semibold text-gray-600">
           Add New Challenge
         </h1>
         <div className="w-full flex flex-col justify-center align-center">
           <div className="form-control w-full mb-2">
             <label className="label">
-              <span className="label-text font-semibold text-gray-600 font-semibold text-gray-600">
+              <span className="label-text font-semibold text-gray-600">
                 Challenge Title
               </span>
             </label>
@@ -154,10 +153,6 @@ export default function CreateChallenge() {
               placeholder="Type here"
               className="input input-bordered focus:outline-none focus:ring-2 focus:ring-emerald-400  w-full"
             />
-            {/* <label className="label">
-            <span className="label-text font-semibold text-gray-600-alt">Bottom Left label</span>
-            <span className="label-text font-semibold text-gray-600-alt">Bottom Right label</span>
-          </label> */}
           </div>
           <div className="form-control w-full mb-2">
             <label className="label">
@@ -181,10 +176,6 @@ export default function CreateChallenge() {
               <option>useNavigate</option>
               <option>useRef</option>
             </select>
-            {/* <label className="label">
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-          </label> */}
           </div>
           <div className="form-control w-full mb-2">
             <label className="label">
@@ -205,10 +196,6 @@ export default function CreateChallenge() {
               <option>Medium</option>
               <option>Hard</option>
             </select>
-            {/* <label className="label">
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-            <span className="label-text font-semibold text-gray-600-alt">Alt label</span>
-          </label> */}
           </div>
         </div>
 

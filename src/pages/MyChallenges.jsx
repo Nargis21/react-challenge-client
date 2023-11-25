@@ -15,7 +15,7 @@ const MyChallenges = () => {
   async function handleRemoveChallenge(challengeId) {
     const result = await removeUserChallengeById(challengeId);
     if (result.success) {
-      toast.success("Successfully Removed.");
+      toast.success("Challenge Removed!");
     } else {
       toast.error("Remove Failed");
     }
