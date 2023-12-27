@@ -19,11 +19,11 @@ const Home = () => {
 
   const navigate = useNavigate();
   return (
-    <div className="flex lg:flex-row flex-col gap-6 justify-evenly py-10 items-center bg-slate-900 h-screen">
+    <div className="flex lg:flex-row flex-col gap-6 justify-evenly py-10 items-center bg-slate-900 lg:h-screen">
       <div>
-        <div className="chat chat-start lg:ml-10 ml-4" data-aos="fade-right">
-          <div className="chat-bubble bg-gradient-to-r from-emerald-400 to-green-400 lg:text-6xl md:text-4xl text-2xl font-bold text-white leading-normal">
-            <div className="p-4">
+        <div className="chat chat-start lg:ml-10 ml-0" data-aos="fade-right">
+          <div className="chat-bubble bg-gradient-to-r from-emerald-400 to-green-400 lg:text-6xl md:text-4xl text-xl font-bold text-white leading-normal">
+            <div className="lg:p-4">
               <h1>Take a Challenge on</h1>
 
               <p className="text-slate-800 flex items-center gap-2 mt-4">
@@ -38,16 +38,19 @@ const Home = () => {
           onClick={() => navigate(`/challenges`)}
         >
           <div className="chat-bubble bg-gradient-to-r from-green-400 to-emerald-400 ">
-            <h1 className="p-2 text-white font-bold text-xl underline flex gap-2 items-center">
+            <h1 className="lg:p-2 text-white font-bold text-xl underline flex gap-2 items-center">
               Explore Now
-              <FaAngleDoubleRight className="text-slate-800 text-2xl"></FaAngleDoubleRight>
+              <FaAngleDoubleRight className="text-slate-800 text-xl"></FaAngleDoubleRight>
             </h1>
           </div>
         </div>
       </div>
 
-      <div data-aos="zoom-in">
+      <div className="hidden lg:flex" data-aos="zoom-in">
         <Lottie options={defaultOptions} height={500} width={700} />
+      </div>
+      <div className="lg:hidden w-[100%]" data-aos="zoom-in">
+        <Lottie options={defaultOptions} />
       </div>
     </div>
   );
