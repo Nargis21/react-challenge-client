@@ -158,7 +158,7 @@ const ManageChallenges = () => {
             Create new Challenge <IoMdCreate className="text-xl"></IoMdCreate>
           </button>
         </div>
-        <div className=" overflow-x-auto flex items-center justify-center pb-6">
+        <div className="overflow-x-auto flex items-center justify-center pb-6">
           <table className="table lg:w-[70%] md:w-[90%] w-[99%] shadow-lg bg-base-100 lg:p-4 p-2 rounded">
             {/* head */}
             <thead>

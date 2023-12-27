@@ -133,7 +133,7 @@ export default function CreateChallenge() {
   }
 
   return (
-    <div className="flex justify-center items-center bg-green-100 py-10">
+    <div className="flex justify-center items-center bg-slate-800 py-10">
       <div className="lg:w-[60%] md:w-[80%] w-[95%] shadow-xl lg:p-6 md:p-4 p-2 rounded bg-green-200">
         <h1 className="text-2xl py-6 text-center font-semibold text-gray-600">
           Add New Challenge
