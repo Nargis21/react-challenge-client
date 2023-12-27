@@ -19,17 +19,15 @@ const Home = () => {
 
   const navigate = useNavigate();
   return (
-    <div className="flex lg:flex-row flex-col gap-6 justify-evenly py-10 items-center bg-slate-900">
+    <div className="flex lg:flex-row flex-col gap-6 justify-evenly py-10 items-center bg-slate-900 h-screen">
       <div>
         <div className="chat chat-start lg:ml-10 ml-4" data-aos="fade-right">
           <div className="chat-bubble bg-gradient-to-r from-emerald-400 to-green-400 lg:text-6xl md:text-4xl text-2xl font-bold text-white leading-normal">
             <div className="p-4">
               <h1>Take a Challenge on</h1>
 
-              <p className="text-slate-800 mt-4">
-                <div className="flex items-center gap-2">
-                  React <BsFire></BsFire>
-                </div>
+              <p className="text-slate-800 flex items-center gap-2 mt-4">
+                React <BsFire></BsFire>
               </p>
             </div>
           </div>
@@ -48,13 +46,8 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="" data-aos="zoom-in">
-        <Lottie
-          className=""
-          options={defaultOptions}
-          height={500}
-          width={700}
-        />
+      <div data-aos="zoom-in">
+        <Lottie options={defaultOptions} height={500} width={700} />
       </div>
     </div>
   );
