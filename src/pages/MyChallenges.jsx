@@ -23,7 +23,7 @@ const MyChallenges = () => {
   }
 
   return (
-    <div className="h-screen bg-slate-800">
+    <div className="lg:h-screen md:h-screen bg-slate-800">
       {challenges?.success && challenges?.data?.challenges.length > 0 ? (
         <div>
           <p className="text-white lg:text-4xl md:text-2xl text-xl font-semibold py-12 bg-slate-900 text-center ">

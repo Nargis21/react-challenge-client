@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import auth from "../firebase.init";
 import useToken from "../hooks/useToken";
 import Loading from "../utils/Loading";
+import userLogo from "../assets/images/user.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center py-10 bg-slate-900">
+    <div className="flex flex-col lg:flex-row justify-center lg:items-start items-center gap-4 py-10 bg-slate-900">
       <div className="card lg:w-[35%] md:w-[60%] w-[90%] shadow-xl bg-green-200">
         <div className="card-body items-center ">
           <h2 className="card-title text-2xl">Login</h2>
@@ -173,6 +174,28 @@ const Login = () => {
               <h1 className="capitalize text-xl text-gray-600">Google</h1>
             </div>
           </button>
+        </div>
+      </div>
+      <div className="order-first lg:order-last">
+        <div className="chat chat-start ml-10  w-full" data-aos="fade-right">
+          <div className="chat-bubble bg-gradient-to-r from-emerald-400 to-green-400 text-white leading-normal">
+            <div className="p-4">
+              <div className="flex items-center gap-2 ">
+                <img src={userLogo} alt="" width={32} />
+                <h1 className="font-semibold text-xl">Login Credentials</h1>
+              </div>
+              <div className="mt-4">
+                <h1 className="font-semibold">Admin:</h1>
+                <h1>Email: admin@gmail.com</h1>
+                <h1>Password: 123456</h1>
+              </div>
+              <div className="mt-4">
+                <h1 className="font-semibold">User:</h1>
+                <h1>Email: user@gmail.com</h1>
+                <h1>Password: 123456</h1>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

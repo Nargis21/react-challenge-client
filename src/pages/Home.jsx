@@ -26,7 +26,7 @@ const Home = () => {
             <div className="p-4">
               <h1>Take a Challenge on</h1>
 
-              <p className="text-slate-800 flex gap-2 mt-4">
+              <p className="text-slate-800 flex items-center gap-2 mt-4">
                 React <BsFire></BsFire>
               </p>
             </div>
@@ -46,13 +46,8 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="" data-aos="zoom-in">
-        <Lottie
-          className=""
-          options={defaultOptions}
-          height={500}
-          width={700}
-        />
+      <div data-aos="zoom-in">
+        <Lottie options={defaultOptions} height={500} width={700} />
       </div>
     </div>
   );
